@@ -88,6 +88,7 @@ public class HW3 extends javax.swing.JFrame {
         jTextArea1 = new javax.swing.JTextArea();
         //initialize for search for
         jSearchFor = new javax.swing.JComboBox<>();
+        jSearchForLabel = new javax.swing.JLabel();//initialize jSearchForLabel
 
         setDefaultCloseOperation(javax.swing.WindowConstants.EXIT_ON_CLOSE);
         setPreferredSize(new java.awt.Dimension(1600, 900));
@@ -155,6 +156,9 @@ public class HW3 extends javax.swing.JFrame {
 
         //set value search for
         jSearchFor.setModel(new javax.swing.DefaultComboBoxModel<>(new String[]{"AND","OR"}));
+
+        //set search for
+        jSearchForLabel.setText("SEARCH FOR");
 
         jLabel2.setText("From");
 
@@ -280,7 +284,13 @@ public class HW3 extends javax.swing.JFrame {
                         .addComponent(jLabel6)
                             .addContainerGap()
                         .addGap(70, 70, 70)
-                        .addComponent(jLabel7)))
+                        .addComponent(jLabel7)
+                            .addGap(40,40,40)
+                            .addComponent(jSearchForLabel)
+                            .addGap(10,10,10)
+                            .addComponent(jSearchFor,javax.swing.GroupLayout.PREFERRED_SIZE, 60, javax.swing.GroupLayout.PREFERRED_SIZE)
+                    )
+                )
                 .addGroup(layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
                     .addGroup(layout.createSequentialGroup()
                         .addGap(100, 100, 100)
@@ -353,7 +363,9 @@ public class HW3 extends javax.swing.JFrame {
                         .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED)
                         .addGroup(layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
                             .addComponent(jLabel6)
-                            .addComponent(jLabel7))
+                            .addComponent(jLabel7)
+                                .addComponent(jSearchForLabel)
+                                .addComponent(jSearchFor,javax.swing.GroupLayout.PREFERRED_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.PREFERRED_SIZE))
                         .addContainerGap(javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE))))
         );
 
@@ -992,6 +1004,7 @@ public class HW3 extends javax.swing.JFrame {
     private javax.swing.JToggleButton jToggleButton1;
     private javax.swing.JToggleButton jToggleButton2;
     private javax.swing.JComboBox jSearchFor;//declare search for
+    private javax.swing.JLabel jSearchForLabel;//declare search label
     // End of variables declaration//GEN-END:variables
 }
 
