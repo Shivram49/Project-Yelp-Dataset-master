@@ -52,7 +52,7 @@ public class HW3 extends javax.swing.JFrame {
     @SuppressWarnings("unchecked")
     // <editor-fold defaultstate="collapsed" desc="Generated Code">//GEN-BEGIN:initComponents
     private void initComponents() {
-
+        //initializing the components
         jScrollPane1 = new javax.swing.JScrollPane();
         jScrollPane2 = new javax.swing.JScrollPane();
         jPanel1 = new javax.swing.JPanel();
@@ -86,6 +86,8 @@ public class HW3 extends javax.swing.JFrame {
         jLabel11 = new javax.swing.JLabel();
         jScrollPane6 = new javax.swing.JScrollPane();
         jTextArea1 = new javax.swing.JTextArea();
+        //initialize for search for
+        jSearchFor = new javax.swing.JComboBox<>();
 
         setDefaultCloseOperation(javax.swing.WindowConstants.EXIT_ON_CLOSE);
         setPreferredSize(new java.awt.Dimension(1600, 900));
@@ -150,6 +152,9 @@ public class HW3 extends javax.swing.JFrame {
 
         jToggleButton2.setText("AM");
         jToggleButton2.setEnabled(false);
+
+        //set value search for
+        jSearchFor.setModel(new javax.swing.DefaultComboBoxModel<>(new String[]{"AND","OR"}));
 
         jLabel2.setText("From");
 
@@ -986,6 +991,7 @@ public class HW3 extends javax.swing.JFrame {
     private javax.swing.JTextField jTextField3;
     private javax.swing.JToggleButton jToggleButton1;
     private javax.swing.JToggleButton jToggleButton2;
+    private javax.swing.JComboBox jSearchFor;//declare search for
     // End of variables declaration//GEN-END:variables
 }
 
