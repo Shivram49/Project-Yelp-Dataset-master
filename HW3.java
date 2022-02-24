@@ -386,6 +386,7 @@ public class HW3 extends javax.swing.JFrame {
             con = DriverManager.getConnection(DBURL, DBUSER, DBPASS);
             statement = con.prepareStatement("SELECT CATEGORY FROM NATIVE_CATEGORY");
             rs = statement.executeQuery();
+            //native category is just the initial business category on the first screen
             while (rs.next()) {
                 JCheckBox mycheckbox = new JCheckBox();
                 mycheckbox.setText(rs.getString("CATEGORY"));
@@ -588,6 +589,7 @@ public class HW3 extends javax.swing.JFrame {
             statement.close();
 
             String Combo1 = jComboBox1.getSelectedItem().toString();
+            String searchForVal = (jSearchFor.getSelectedItem().toString().equals("AND"))?"INTERSECT":"UNION";
 
             if (Combo1 == "NONE") {
                 Combo1 = "SUNDAY";
@@ -606,7 +608,7 @@ public class HW3 extends javax.swing.JFrame {
             if (selected_categories.size() > 1) {
                 for (int i = 1; i < selected_categories.size(); i++) {
                     System.out.println(i);
-                    statement_text += " OR BUSINESS_CATEGORY.B_CATEGORY = " + "'" + formatString(selected_categories.get(i)) + "'";
+                    statement_text += " " + searchForVal + " BUSINESS_CATEGORY.B_CATEGORY = " + "'" + formatString(selected_categories.get(i)) + "'";
                 }
             }
 
@@ -617,7 +619,7 @@ public class HW3 extends javax.swing.JFrame {
 
                 if (selected_sub_categories.size() > 1) {
                     for (int i = 0; i < selected_sub_categories.size(); i++) {
-                        statement_text += "OR BUSINESS_SUB_CATEGORY.B_SUB_CATEGORY = " + "'" + formatString(selected_sub_categories.get(i)) + "'";
+                        statement_text += " " + searchForVal +" BUSINESS_SUB_CATEGORY.B_SUB_CATEGORY = " + "'" + formatString(selected_sub_categories.get(i)) + "'";
                     }
                 }
                 statement_text += ")";
@@ -625,14 +627,14 @@ public class HW3 extends javax.swing.JFrame {
 
             statement = con.prepareStatement(statement_text);
             rs = statement.executeQuery();
-            StringBuffer buf_all = new StringBuffer(attrib_string);;
+            StringBuffer buf_all = new StringBuffer(attrib_string);
             int check_how_many = 0;
             String iamthebest = null;
             int best_checkin = -1;
             while (rs.next()) {
                 boolean check_the_row = true;
                 boolean check_any_row = false;
-                String key_attribute = rs.getString("ATTRIB");
+                String key_attribute = rs.getString("ATTRIB");//doubt: not sure if attrib exists in the returned columns.
                 int go_to_length = Integer.min(attrib_string.length(), key_attribute.length());
                 StringBuffer buf_me = new StringBuffer(key_attribute);
                 for (int i = 0; i < go_to_length; i++) {
@@ -656,7 +658,6 @@ public class HW3 extends javax.swing.JFrame {
                     check_time = check_time(check_time_open, check_time_close, jComboBox3.getSelectedItem().toString(),
                             jComboBox4.getSelectedItem().toString(), jToggleButton1.isSelected(), jToggleButton2.isSelected());
                     //System.out.println("Completed check_time: " + check_time);
-
                     if (!check_time) {
                         continue;
                     }
