@@ -599,32 +599,20 @@ public class HW3 extends javax.swing.JFrame {
                     + "BUSINESS." + Combo1 + "_TIME_CLOSE, "
                     + "BUSINESS.B_NAME, BUSINESS.ATTRIB, BUSINESS.CITY, BUSINESS.STATE_NM, \n"
                     + "BUSINESS.RATING FROM BUSINESS \n"
-                    + "INNER JOIN BUSINESS_CATEGORY \n"
-                    + "ON BUSINESS.BID = BUSINESS_CATEGORY.BID "
-                    + "INNER JOIN BUSINESS_SUB_CATEGORY ON BUSINESS.BID = BUSINESS_SUB_CATEGORY.BID\n"
-                    + "WHERE (BUSINESS_CATEGORY.B_CATEGORY = "
+                    + "WHERE BUSINESS.BID IN( \n"
+                    + "SELECT BID FROM BUSINESS_CATEGORY\n"
+                    + "WHERE B_CATEGORY=\n"
                     + "'" + formatString(selected_categories.get(0)) + "'";
 
-            if (selected_categories.size() > 1) {
+            if (selected_categories.size() > 0) {
                 for (int i = 1; i < selected_categories.size(); i++) {
                     System.out.println(i);
-                    statement_text += " " + searchForVal + " BUSINESS_CATEGORY.B_CATEGORY = " + "'" + formatString(selected_categories.get(i)) + "'";
+                    statement_text += " " + searchForVal + " SELECT BID FROM BUSINESS_CATEGORY WHERE B_CATEGORY= " + "'" + formatString(selected_categories.get(i)) + "'";
                 }
             }
-
             statement_text += ")";
-
-            if (selected_sub_categories.size() > 0) {
-                statement_text += "AND (BUSINESS_SUB_CATEGORY.B_SUB_CATEGORY = " + "'" + formatString(selected_sub_categories.get(0)) + "'";
-
-                if (selected_sub_categories.size() > 1) {
-                    for (int i = 0; i < selected_sub_categories.size(); i++) {
-                        statement_text += " " + searchForVal +" BUSINESS_SUB_CATEGORY.B_SUB_CATEGORY = " + "'" + formatString(selected_sub_categories.get(i)) + "'";
-                    }
-                }
-                statement_text += ")";
-            }
-
+            System.out.println("Categories text");
+            System.out.println(statement_text);
             statement = con.prepareStatement(statement_text);
             rs = statement.executeQuery();
             StringBuffer buf_all = new StringBuffer(attrib_string);
@@ -800,16 +788,17 @@ public class HW3 extends javax.swing.JFrame {
             if (val < 3) {
                 statement_text = "SELECT DISTINCT BUSINESS_SUB_CATEGORY.B_SUB_CATEGORY "
                         + "FROM BUSINESS_SUB_CATEGORY \n"
-                        + "INNER JOIN BUSINESS_CATEGORY \n"
-                        + "ON BUSINESS_SUB_CATEGORY.BID = BUSINESS_CATEGORY.BID \n"
-                        + "WHERE BUSINESS_CATEGORY.B_CATEGORY = "
+                        + "WHERE BUSINESS_SUB_CATEGORY.BID IN(\n"
+                        + "SELECT BID FROM BUSINESS_CATEGORY WHERE B_CATEGORY= "
                         + "'" + selected_categories.get(0) + "'";
                 if (selected_categories.size() > 1) {
                     for (int i = 1; i < selected_categories.size(); i++) {
-                        statement_text += " OR BUSINESS_CATEGORY.B_CATEGORY = " + "'" + selected_categories.get(i) + "'";
+                        statement_text += searchForVal + " SELECT BID FROM BUSINESS_CATEGORY WHERE B_CATEGORY= " + "'" + selected_categories.get(i) + "'";
                     }
                 }
-
+                statement_text += ")";
+                System.out.println("Subcategories text");
+                System.out.println(statement_text);
                 statement = con.prepareStatement(statement_text);
                 rs = statement.executeQuery();
 
