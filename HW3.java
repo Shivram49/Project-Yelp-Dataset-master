@@ -52,7 +52,7 @@ public class HW3 extends javax.swing.JFrame {
     @SuppressWarnings("unchecked")
     // <editor-fold defaultstate="collapsed" desc="Generated Code">//GEN-BEGIN:initComponents
     private void initComponents() {
-
+        //initializing the components
         jScrollPane1 = new javax.swing.JScrollPane();
         jScrollPane2 = new javax.swing.JScrollPane();
         jPanel1 = new javax.swing.JPanel();
@@ -86,6 +86,9 @@ public class HW3 extends javax.swing.JFrame {
         jLabel11 = new javax.swing.JLabel();
         jScrollPane6 = new javax.swing.JScrollPane();
         jTextArea1 = new javax.swing.JTextArea();
+        //initialize for search for
+        jSearchFor = new javax.swing.JComboBox<>();
+        jSearchForLabel = new javax.swing.JLabel();//initialize jSearchForLabel
 
         setDefaultCloseOperation(javax.swing.WindowConstants.EXIT_ON_CLOSE);
         setPreferredSize(new java.awt.Dimension(1600, 900));
@@ -150,6 +153,12 @@ public class HW3 extends javax.swing.JFrame {
 
         jToggleButton2.setText("AM");
         jToggleButton2.setEnabled(false);
+
+        //set value search for
+        jSearchFor.setModel(new javax.swing.DefaultComboBoxModel<>(new String[]{"AND","OR"}));
+
+        //set search for
+        jSearchForLabel.setText("SEARCH FOR");
 
         jLabel2.setText("From");
 
@@ -275,7 +284,13 @@ public class HW3 extends javax.swing.JFrame {
                         .addComponent(jLabel6)
                             .addContainerGap()
                         .addGap(70, 70, 70)
-                        .addComponent(jLabel7)))
+                        .addComponent(jLabel7)
+                            .addGap(40,40,40)
+                            .addComponent(jSearchForLabel)
+                            .addGap(10,10,10)
+                            .addComponent(jSearchFor,javax.swing.GroupLayout.PREFERRED_SIZE, 60, javax.swing.GroupLayout.PREFERRED_SIZE)
+                    )
+                )
                 .addGroup(layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
                     .addGroup(layout.createSequentialGroup()
                         .addGap(100, 100, 100)
@@ -348,7 +363,9 @@ public class HW3 extends javax.swing.JFrame {
                         .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED)
                         .addGroup(layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
                             .addComponent(jLabel6)
-                            .addComponent(jLabel7))
+                            .addComponent(jLabel7)
+                                .addComponent(jSearchForLabel)
+                                .addComponent(jSearchFor,javax.swing.GroupLayout.PREFERRED_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.PREFERRED_SIZE))
                         .addContainerGap(javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE))))
         );
 
@@ -369,6 +386,7 @@ public class HW3 extends javax.swing.JFrame {
             con = DriverManager.getConnection(DBURL, DBUSER, DBPASS);
             statement = con.prepareStatement("SELECT CATEGORY FROM NATIVE_CATEGORY");
             rs = statement.executeQuery();
+            //native category is just the initial business category on the first screen
             while (rs.next()) {
                 JCheckBox mycheckbox = new JCheckBox();
                 mycheckbox.setText(rs.getString("CATEGORY"));
@@ -571,6 +589,7 @@ public class HW3 extends javax.swing.JFrame {
             statement.close();
 
             String Combo1 = jComboBox1.getSelectedItem().toString();
+            String searchForVal = (jSearchFor.getSelectedItem().toString().equals("AND"))?"INTERSECT":"UNION";
 
             if (Combo1 == "NONE") {
                 Combo1 = "SUNDAY";
@@ -580,42 +599,37 @@ public class HW3 extends javax.swing.JFrame {
                     + "BUSINESS." + Combo1 + "_TIME_CLOSE, "
                     + "BUSINESS.B_NAME, BUSINESS.ATTRIB, BUSINESS.CITY, BUSINESS.STATE_NM, \n"
                     + "BUSINESS.RATING FROM BUSINESS \n"
-                    + "INNER JOIN BUSINESS_CATEGORY \n"
-                    + "ON BUSINESS.BID = BUSINESS_CATEGORY.BID "
-                    + "INNER JOIN BUSINESS_SUB_CATEGORY ON BUSINESS.BID = BUSINESS_SUB_CATEGORY.BID\n"
-                    + "WHERE (BUSINESS_CATEGORY.B_CATEGORY = "
+                    + "WHERE BUSINESS.BID IN( \n"
+                    + "SELECT BID FROM BUSINESS_CATEGORY\n"
+                    + "WHERE B_CATEGORY=\n"
                     + "'" + formatString(selected_categories.get(0)) + "'";
 
-            if (selected_categories.size() > 1) {
+            if (selected_categories.size() > 0) {
                 for (int i = 1; i < selected_categories.size(); i++) {
                     System.out.println(i);
-                    statement_text += " OR BUSINESS_CATEGORY.B_CATEGORY = " + "'" + formatString(selected_categories.get(i)) + "'";
+                    statement_text += " " + searchForVal + " SELECT BID FROM BUSINESS_CATEGORY WHERE B_CATEGORY= " + "'" + formatString(selected_categories.get(i)) + "'";
                 }
             }
-
-            statement_text += ")";
-
+            //fixing subcategories issue.
             if (selected_sub_categories.size() > 0) {
-                statement_text += "AND (BUSINESS_SUB_CATEGORY.B_SUB_CATEGORY = " + "'" + formatString(selected_sub_categories.get(0)) + "'";
-
-                if (selected_sub_categories.size() > 1) {
-                    for (int i = 0; i < selected_sub_categories.size(); i++) {
-                        statement_text += "OR BUSINESS_SUB_CATEGORY.B_SUB_CATEGORY = " + "'" + formatString(selected_sub_categories.get(i)) + "'";
-                    }
+                statement_text += " INTERSECT SELECT BID FROM BUSINESS_SUB_CATEGORY WHERE B_SUB_CATEGORY= " + "'" + formatString(selected_sub_categories.get(0)) + "'";
+                for (int i = 1; i < selected_sub_categories.size(); i++) {
+                    statement_text += " " + searchForVal + " SELECT BID FROM BUSINESS_SUB_CATEGORY WHERE B_SUB_CATEGORY= " + "'" + formatString(selected_sub_categories.get(i)) + "'";
                 }
-                statement_text += ")";
             }
-
+            statement_text += ")";
+            System.out.println("Categories text");
+            System.out.println(statement_text);
             statement = con.prepareStatement(statement_text);
             rs = statement.executeQuery();
-            StringBuffer buf_all = new StringBuffer(attrib_string);;
+            StringBuffer buf_all = new StringBuffer(attrib_string);
             int check_how_many = 0;
             String iamthebest = null;
             int best_checkin = -1;
             while (rs.next()) {
                 boolean check_the_row = true;
                 boolean check_any_row = false;
-                String key_attribute = rs.getString("ATTRIB");
+                String key_attribute = rs.getString("ATTRIB");//doubt: not sure if attrib exists in the returned columns.
                 int go_to_length = Integer.min(attrib_string.length(), key_attribute.length());
                 StringBuffer buf_me = new StringBuffer(key_attribute);
                 for (int i = 0; i < go_to_length; i++) {
@@ -639,7 +653,6 @@ public class HW3 extends javax.swing.JFrame {
                     check_time = check_time(check_time_open, check_time_close, jComboBox3.getSelectedItem().toString(),
                             jComboBox4.getSelectedItem().toString(), jToggleButton1.isSelected(), jToggleButton2.isSelected());
                     //System.out.println("Completed check_time: " + check_time);
-
                     if (!check_time) {
                         continue;
                     }
@@ -782,16 +795,17 @@ public class HW3 extends javax.swing.JFrame {
             if (val < 3) {
                 statement_text = "SELECT DISTINCT BUSINESS_SUB_CATEGORY.B_SUB_CATEGORY "
                         + "FROM BUSINESS_SUB_CATEGORY \n"
-                        + "INNER JOIN BUSINESS_CATEGORY \n"
-                        + "ON BUSINESS_SUB_CATEGORY.BID = BUSINESS_CATEGORY.BID \n"
-                        + "WHERE BUSINESS_CATEGORY.B_CATEGORY = "
+                        + "WHERE BUSINESS_SUB_CATEGORY.BID IN(\n"
+                        + "SELECT BID FROM BUSINESS_CATEGORY WHERE B_CATEGORY= "
                         + "'" + selected_categories.get(0) + "'";
                 if (selected_categories.size() > 1) {
                     for (int i = 1; i < selected_categories.size(); i++) {
-                        statement_text += " OR BUSINESS_CATEGORY.B_CATEGORY = " + "'" + selected_categories.get(i) + "'";
+                        statement_text += searchForVal + " SELECT BID FROM BUSINESS_CATEGORY WHERE B_CATEGORY= " + "'" + selected_categories.get(i) + "'";
                     }
                 }
-
+                statement_text += ")";
+                System.out.println("Subcategories text");
+                System.out.println(statement_text);
                 statement = con.prepareStatement(statement_text);
                 rs = statement.executeQuery();
 
@@ -986,6 +1000,8 @@ public class HW3 extends javax.swing.JFrame {
     private javax.swing.JTextField jTextField3;
     private javax.swing.JToggleButton jToggleButton1;
     private javax.swing.JToggleButton jToggleButton2;
+    private javax.swing.JComboBox jSearchFor;//declare search for
+    private javax.swing.JLabel jSearchForLabel;//declare search label
     // End of variables declaration//GEN-END:variables
 }
 
