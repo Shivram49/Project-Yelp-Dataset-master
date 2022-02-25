@@ -610,6 +610,13 @@ public class HW3 extends javax.swing.JFrame {
                     statement_text += " " + searchForVal + " SELECT BID FROM BUSINESS_CATEGORY WHERE B_CATEGORY= " + "'" + formatString(selected_categories.get(i)) + "'";
                 }
             }
+            //fixing subcategories issue.
+            if (selected_sub_categories.size() > 0) {
+                statement_text += " INTERSECT SELECT BID FROM BUSINESS_SUB_CATEGORY WHERE B_SUB_CATEGORY= " + "'" + formatString(selected_sub_categories.get(0)) + "'";
+                for (int i = 1; i < selected_sub_categories.size(); i++) {
+                    statement_text += " " + searchForVal + " SELECT BID FROM BUSINESS_SUB_CATEGORY WHERE B_SUB_CATEGORY= " + "'" + formatString(selected_sub_categories.get(i)) + "'";
+                }
+            }
             statement_text += ")";
             System.out.println("Categories text");
             System.out.println(statement_text);
