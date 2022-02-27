@@ -89,6 +89,28 @@ public class HW3 extends javax.swing.JFrame {
         //initialize for search for
         jSearchFor = new javax.swing.JComboBox<>();
         jSearchForLabel = new javax.swing.JLabel();//initialize jSearchForLabel
+        //initialize user fields
+        jMemberSince = new javax.swing.JLabel();
+        jMemberSinceCombo = new javax.swing.JComboBox();
+        jMemberSinceText = new javax.swing.JTextField ();
+        jReviewCount = new javax.swing.JLabel();
+        jReviewCountCombo = new javax.swing.JComboBox();
+        jReviewCountText = new javax.swing.JTextField();
+        jNumberOfFriends = new javax.swing.JLabel();
+        jNumberOfFriendsCombo = new javax.swing.JComboBox();
+        jNumberOfFriendsText = new javax.swing.JTextField();
+        jAverageStars = new javax.swing.JLabel();
+        jAverageStarsCombo = new javax.swing.JComboBox();
+        jAverageStarsText = new javax.swing.JTextField();
+        jVoteFunny = new javax.swing.JLabel();
+        jVoteFunnyCombo = new javax.swing.JComboBox();
+        jVoteFunnyText = new javax.swing.JTextField();
+        jVoteUseful = new javax.swing.JLabel();
+        jVoteUsefulCombo = new javax.swing.JComboBox();
+        jVoteUsefulText = new javax.swing.JTextField();
+        jVoteCool = new javax.swing.JLabel();
+        jVoteCoolCombo = new javax.swing.JComboBox();
+        jVoteCoolText = new javax.swing.JTextField();
 
         setDefaultCloseOperation(javax.swing.WindowConstants.EXIT_ON_CLOSE);
         setPreferredSize(new java.awt.Dimension(1600, 900));
@@ -203,6 +225,24 @@ public class HW3 extends javax.swing.JFrame {
         jLabel11.setFont(new java.awt.Font("Tahoma", 0, 14)); // NOI18N
         jLabel11.setText("Most Visited");
 
+
+
+        //user fields value set.
+        jMemberSince.setText("Member Since");
+        jMemberSinceCombo.setModel(new javax.swing.DefaultComboBoxModel<>(new String[] {"<",">","=","<=",">="}));
+        jReviewCount.setText("Review Count");
+        jReviewCountCombo.setModel(new javax.swing.DefaultComboBoxModel<>(new String[] {"<",">","=","<=",">="}));
+        jNumberOfFriends.setText("Number of Friends");
+        jNumberOfFriendsCombo.setModel(new javax.swing.DefaultComboBoxModel<>(new String[] {"<",">","=","<=",">="}));
+        jAverageStars.setText("Average Stars");
+        jAverageStarsCombo.setModel(new javax.swing.DefaultComboBoxModel<>(new String[] {"<",">","=","<=",">="}));
+        jVoteFunny.setText("Vote Funny");
+        jVoteFunnyCombo.setModel(new javax.swing.DefaultComboBoxModel<>(new String[] {"<",">","=","<=",">="}));
+        jVoteUseful.setText("Vote Useful");
+        jVoteUsefulCombo.setModel(new javax.swing.DefaultComboBoxModel<>(new String[] {"<",">","=","<=",">="}));
+        jVoteCool.setText("Vote Cool");
+        jVoteCoolCombo.setModel(new javax.swing.DefaultComboBoxModel<>(new String[] {"<",">","=","<=",">="}));
+
         jScrollPane6.setHorizontalScrollBarPolicy(javax.swing.ScrollPaneConstants.HORIZONTAL_SCROLLBAR_NEVER);
         jScrollPane6.setAutoscrolls(true);
         jScrollPane6.setEnabled(false);
@@ -301,6 +341,55 @@ public class HW3 extends javax.swing.JFrame {
 //                        .addComponent(jButton2, javax.swing.GroupLayout.PREFERRED_SIZE, 156, javax.swing.GroupLayout.PREFERRED_SIZE))
                     .addComponent(jScrollPane3, javax.swing.GroupLayout.PREFERRED_SIZE, 626, javax.swing.GroupLayout.PREFERRED_SIZE))
                 .addContainerGap(26, Short.MAX_VALUE))
+                    .addGroup(layout.createSequentialGroup()//member since horizontal ui
+                            .addComponent(jMemberSince,javax.swing.GroupLayout.PREFERRED_SIZE, 90, javax.swing.GroupLayout.PREFERRED_SIZE)
+                            .addGap(10,10,10)
+                            .addComponent(jMemberSinceCombo,javax.swing.GroupLayout.PREFERRED_SIZE, 50, javax.swing.GroupLayout.PREFERRED_SIZE)
+                            .addGap(10,10,10)
+                            .addComponent(jMemberSinceText,javax.swing.GroupLayout.PREFERRED_SIZE, 90, javax.swing.GroupLayout.PREFERRED_SIZE)
+                    )
+                    .addGroup(layout.createSequentialGroup()//jReviewCount horizontal ui
+                            .addComponent(jReviewCount,javax.swing.GroupLayout.PREFERRED_SIZE, 90, javax.swing.GroupLayout.PREFERRED_SIZE)
+                            .addGap(10,10,10)
+                            .addComponent(jReviewCountCombo,javax.swing.GroupLayout.PREFERRED_SIZE, 50, javax.swing.GroupLayout.PREFERRED_SIZE)
+                            .addGap(10,10,10)
+                            .addComponent(jReviewCountText,javax.swing.GroupLayout.PREFERRED_SIZE, 90, javax.swing.GroupLayout.PREFERRED_SIZE)
+                    )
+                    .addGroup(layout.createSequentialGroup()//jNumberOfFriends horizontal ui
+                            .addComponent(jNumberOfFriends,javax.swing.GroupLayout.PREFERRED_SIZE, 90, javax.swing.GroupLayout.PREFERRED_SIZE)
+                            .addGap(10,10,10)
+                            .addComponent(jNumberOfFriendsCombo,javax.swing.GroupLayout.PREFERRED_SIZE, 50, javax.swing.GroupLayout.PREFERRED_SIZE)
+                            .addGap(10,10,10)
+                            .addComponent(jNumberOfFriendsText,javax.swing.GroupLayout.PREFERRED_SIZE, 90, javax.swing.GroupLayout.PREFERRED_SIZE)
+                    )
+                    .addGroup(layout.createSequentialGroup()//jAverageStars horizontal ui
+                            .addComponent(jAverageStars,javax.swing.GroupLayout.PREFERRED_SIZE, 90, javax.swing.GroupLayout.PREFERRED_SIZE)
+                            .addGap(10,10,10)
+                            .addComponent(jAverageStarsCombo,javax.swing.GroupLayout.PREFERRED_SIZE, 50, javax.swing.GroupLayout.PREFERRED_SIZE)
+                            .addGap(10,10,10)
+                            .addComponent(jAverageStarsText,javax.swing.GroupLayout.PREFERRED_SIZE, 90, javax.swing.GroupLayout.PREFERRED_SIZE)
+                    )
+                    .addGroup(layout.createSequentialGroup()//jVoteFunny horizontal ui
+                            .addComponent(jVoteFunny,javax.swing.GroupLayout.PREFERRED_SIZE, 90, javax.swing.GroupLayout.PREFERRED_SIZE)
+                            .addGap(10,10,10)
+                            .addComponent(jVoteFunnyCombo,javax.swing.GroupLayout.PREFERRED_SIZE, 50, javax.swing.GroupLayout.PREFERRED_SIZE)
+                            .addGap(10,10,10)
+                            .addComponent(jVoteFunnyText,javax.swing.GroupLayout.PREFERRED_SIZE, 90, javax.swing.GroupLayout.PREFERRED_SIZE)
+                    )
+                    .addGroup(layout.createSequentialGroup()//jVoteUseful horizontal ui
+                            .addComponent(jVoteUseful,javax.swing.GroupLayout.PREFERRED_SIZE, 90, javax.swing.GroupLayout.PREFERRED_SIZE)
+                            .addGap(10,10,10)
+                            .addComponent(jVoteUsefulCombo,javax.swing.GroupLayout.PREFERRED_SIZE, 50, javax.swing.GroupLayout.PREFERRED_SIZE)
+                            .addGap(10,10,10)
+                            .addComponent(jVoteUsefulText,javax.swing.GroupLayout.PREFERRED_SIZE, 90, javax.swing.GroupLayout.PREFERRED_SIZE)
+                    )
+                    .addGroup(layout.createSequentialGroup()//jVoteCool horizontal ui
+                            .addComponent(jVoteCool,javax.swing.GroupLayout.PREFERRED_SIZE, 90, javax.swing.GroupLayout.PREFERRED_SIZE)
+                            .addGap(10,10,10)
+                            .addComponent(jVoteCoolCombo,javax.swing.GroupLayout.PREFERRED_SIZE, 50, javax.swing.GroupLayout.PREFERRED_SIZE)
+                            .addGap(10,10,10)
+                            .addComponent(jVoteCoolText,javax.swing.GroupLayout.PREFERRED_SIZE, 90, javax.swing.GroupLayout.PREFERRED_SIZE)
+                    )
         );
         layout.setVerticalGroup(
             layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
@@ -366,7 +455,46 @@ public class HW3 extends javax.swing.JFrame {
                             .addComponent(jLabel7)
                                 .addComponent(jSearchForLabel)
                                 .addComponent(jSearchFor,javax.swing.GroupLayout.PREFERRED_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.PREFERRED_SIZE))
-                        .addContainerGap(javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE))))
+                        .addContainerGap(javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE)))
+                    .addGroup(layout.createSequentialGroup()
+                            .addGroup(layout.createParallelGroup(GroupLayout.Alignment.BASELINE)
+                                    .addComponent(jMemberSince,javax.swing.GroupLayout.PREFERRED_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.PREFERRED_SIZE)
+                                    .addComponent(jMemberSinceCombo,javax.swing.GroupLayout.PREFERRED_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.PREFERRED_SIZE)
+                                    .addComponent(jMemberSinceText,javax.swing.GroupLayout.PREFERRED_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.PREFERRED_SIZE)
+                            )
+                            .addGroup(layout.createParallelGroup(GroupLayout.Alignment.BASELINE)
+                                    .addComponent(jReviewCount,javax.swing.GroupLayout.PREFERRED_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.PREFERRED_SIZE)
+                                    .addComponent(jReviewCountCombo,javax.swing.GroupLayout.PREFERRED_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.PREFERRED_SIZE)
+                                    .addComponent(jReviewCountText,javax.swing.GroupLayout.PREFERRED_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.PREFERRED_SIZE)
+                            )
+                            .addGroup(layout.createParallelGroup(GroupLayout.Alignment.BASELINE)
+                                    .addComponent(jNumberOfFriends,javax.swing.GroupLayout.PREFERRED_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.PREFERRED_SIZE)
+                                    .addComponent(jNumberOfFriendsCombo,javax.swing.GroupLayout.PREFERRED_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.PREFERRED_SIZE)
+                                    .addComponent(jNumberOfFriendsText,javax.swing.GroupLayout.PREFERRED_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.PREFERRED_SIZE)
+                            )
+                            .addGroup(layout.createParallelGroup(GroupLayout.Alignment.BASELINE)
+                                    .addComponent(jAverageStars,javax.swing.GroupLayout.PREFERRED_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.PREFERRED_SIZE)
+                                    .addComponent(jAverageStarsCombo,javax.swing.GroupLayout.PREFERRED_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.PREFERRED_SIZE)
+                                    .addComponent(jAverageStarsText,javax.swing.GroupLayout.PREFERRED_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.PREFERRED_SIZE)
+                            )
+                            .addGroup(layout.createParallelGroup(GroupLayout.Alignment.BASELINE)
+                                    .addComponent(jVoteFunny,javax.swing.GroupLayout.PREFERRED_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.PREFERRED_SIZE)
+                                    .addComponent(jVoteFunnyCombo,javax.swing.GroupLayout.PREFERRED_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.PREFERRED_SIZE)
+                                    .addComponent(jVoteFunnyText,javax.swing.GroupLayout.PREFERRED_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.PREFERRED_SIZE)
+                            )
+                            .addGroup(layout.createParallelGroup(GroupLayout.Alignment.BASELINE)
+                                    .addComponent(jVoteUseful,javax.swing.GroupLayout.PREFERRED_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.PREFERRED_SIZE)
+                                    .addComponent(jVoteUsefulCombo,javax.swing.GroupLayout.PREFERRED_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.PREFERRED_SIZE)
+                                    .addComponent(jVoteUsefulText,javax.swing.GroupLayout.PREFERRED_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.PREFERRED_SIZE)
+                            )
+                            .addGroup(layout.createParallelGroup(GroupLayout.Alignment.BASELINE)
+                                    .addComponent(jVoteCool,javax.swing.GroupLayout.PREFERRED_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.PREFERRED_SIZE)
+                                    .addComponent(jVoteCoolCombo,javax.swing.GroupLayout.PREFERRED_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.PREFERRED_SIZE)
+                                    .addComponent(jVoteCoolText,javax.swing.GroupLayout.PREFERRED_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.PREFERRED_SIZE)
+                            )
+                    )
+
+            )
         );
 
         pack();
@@ -586,6 +714,7 @@ public class HW3 extends javax.swing.JFrame {
             while (rs.next()) {
                 all_attributes.add(rs.getString("ATTRIB"));
             }
+
             statement.close();
 
             String Combo1 = jComboBox1.getSelectedItem().toString();
@@ -618,8 +747,9 @@ public class HW3 extends javax.swing.JFrame {
                 }
             }
             statement_text += ")";
-            System.out.println("Categories text");
-            System.out.println(statement_text);
+            //testing queriesßß
+//            System.out.println("Categories text");
+//            System.out.println(statement_text);
             statement = con.prepareStatement(statement_text);
             rs = statement.executeQuery();
             StringBuffer buf_all = new StringBuffer(attrib_string);
@@ -804,8 +934,9 @@ public class HW3 extends javax.swing.JFrame {
                     }
                 }
                 statement_text += ")";
-                System.out.println("Subcategories text");
-                System.out.println(statement_text);
+                //testing queries
+//                System.out.println("Subcategories text");
+//                System.out.println(statement_text);
                 statement = con.prepareStatement(statement_text);
                 rs = statement.executeQuery();
 
@@ -849,6 +980,12 @@ public class HW3 extends javax.swing.JFrame {
         } catch (SQLException ex) {
             Logger.getLogger(HW3.class.getName()).log(Level.SEVERE, null, ex);
         }
+
+    }
+
+
+    //updates on user table
+    public void updateUserTable(){
 
     }
 
@@ -1002,6 +1139,29 @@ public class HW3 extends javax.swing.JFrame {
     private javax.swing.JToggleButton jToggleButton2;
     private javax.swing.JComboBox jSearchFor;//declare search for
     private javax.swing.JLabel jSearchForLabel;//declare search label
+    //user ui fields decalaration
+    private javax.swing.JLabel jMemberSince;
+    private javax.swing.JComboBox jMemberSinceCombo;
+    private javax.swing.JTextField jMemberSinceText;
+    private javax.swing.JLabel jReviewCount;
+    private javax.swing.JComboBox jReviewCountCombo;
+    private javax.swing.JTextField jReviewCountText;
+    private javax.swing.JLabel jNumberOfFriends;
+    private javax.swing.JComboBox jNumberOfFriendsCombo;
+    private javax.swing.JTextField jNumberOfFriendsText;
+    private javax.swing.JLabel jAverageStars;
+    private javax.swing.JComboBox jAverageStarsCombo;
+    private javax.swing.JTextField jAverageStarsText;
+    private javax.swing.JLabel jVoteFunny;
+    private javax.swing.JComboBox jVoteFunnyCombo;
+    private javax.swing.JTextField jVoteFunnyText;
+    private javax.swing.JLabel jVoteUseful;
+    private javax.swing.JComboBox jVoteUsefulCombo;
+    private javax.swing.JTextField jVoteUsefulText;
+    private javax.swing.JLabel jVoteCool;
+    private javax.swing.JComboBox jVoteCoolCombo;
+    private javax.swing.JTextField jVoteCoolText;
+
     // End of variables declaration//GEN-END:variables
 }
 
