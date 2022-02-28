@@ -117,6 +117,13 @@ public class HW3 extends javax.swing.JFrame {
         jReviewFrom = new javax.swing.JTextField();
         jReviewToLabel = new javax.swing.JLabel();
         jReviewTo = new javax.swing.JTextField();
+        jReviewStarsLabel = new javax.swing.JLabel();
+        jReviewStarsCombo = new javax.swing.JComboBox();
+        jReviewStarsText = new javax.swing.JTextField();
+        jReviewVotesLabel = new javax.swing.JLabel();
+        jReviewVotesCombo = new javax.swing.JComboBox();
+        jReviewVotesText = new javax.swing.JTextField();
+
 
         setDefaultCloseOperation(javax.swing.WindowConstants.EXIT_ON_CLOSE);
         setPreferredSize(new java.awt.Dimension(1600, 900));
@@ -262,6 +269,13 @@ public class HW3 extends javax.swing.JFrame {
         jVoteCool.setText("Vote Cool");
         jVoteCoolCombo.setModel(new javax.swing.DefaultComboBoxModel<>(new String[] {"<",">","=","<=",">="}));
 
+        //review to review from vallues set
+        jReviewStarsLabel.setText("Stars");
+        jReviewStarsCombo.setModel(new javax.swing.DefaultComboBoxModel<>(new String[] {"<",">","=","<=",">="}));
+        jReviewVotesLabel.setText("Votes");
+        jReviewVotesCombo.setModel(new javax.swing.DefaultComboBoxModel<>(new String[] {"<",">","=","<=",">="}));
+
+
         jScrollPane6.setHorizontalScrollBarPolicy(javax.swing.ScrollPaneConstants.HORIZONTAL_SCROLLBAR_NEVER);
         jScrollPane6.setAutoscrolls(true);
         jScrollPane6.setEnabled(false);
@@ -331,7 +345,12 @@ public class HW3 extends javax.swing.JFrame {
                                                 .addComponent(jReviewFrom,javax.swing.GroupLayout.PREFERRED_SIZE, 100, javax.swing.GroupLayout.PREFERRED_SIZE)
                                                 .addComponent(jReviewToLabel,javax.swing.GroupLayout.PREFERRED_SIZE, 100, javax.swing.GroupLayout.PREFERRED_SIZE)
                                                 .addComponent(jReviewTo)
-
+                                                .addComponent(jReviewStarsLabel,javax.swing.GroupLayout.PREFERRED_SIZE, 100, javax.swing.GroupLayout.PREFERRED_SIZE)
+                                                .addComponent(jReviewStarsCombo,javax.swing.GroupLayout.PREFERRED_SIZE, 50, javax.swing.GroupLayout.PREFERRED_SIZE)
+                                                .addComponent(jReviewStarsText)
+                                                .addComponent(jReviewVotesLabel,javax.swing.GroupLayout.PREFERRED_SIZE, 100, javax.swing.GroupLayout.PREFERRED_SIZE)
+                                                .addComponent(jReviewVotesCombo,javax.swing.GroupLayout.PREFERRED_SIZE, 50, javax.swing.GroupLayout.PREFERRED_SIZE)
+                                                .addComponent(jReviewVotesText)
                                         )
                                             //    .addComponent(jReviewFrom,javax.swing.GroupLayout.PREFERRED_SIZE, 100, javax.swing.GroupLayout.PREFERRED_SIZE)
 //                                                .addComponent(jReviewFromLabel)
@@ -476,7 +495,18 @@ public class HW3 extends javax.swing.JFrame {
                                     .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED)
                                     .addComponent(jReviewToLabel)
                                     .addComponent(jReviewTo, javax.swing.GroupLayout.PREFERRED_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.PREFERRED_SIZE)
-//                                .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED)
+                                .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED)
+                                            .addComponent(jReviewStarsLabel,javax.swing.GroupLayout.PREFERRED_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.PREFERRED_SIZE)
+//                                    .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED)
+                                            .addComponent(jReviewStarsCombo,javax.swing.GroupLayout.PREFERRED_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.PREFERRED_SIZE)
+//                                    .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED)
+                                            .addComponent(jReviewStarsText,javax.swing.GroupLayout.PREFERRED_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.PREFERRED_SIZE)
+//                                    .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED)
+                                    .addComponent(jReviewVotesLabel,javax.swing.GroupLayout.PREFERRED_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.PREFERRED_SIZE)
+//                                    .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED)
+                                    .addComponent(jReviewVotesCombo,javax.swing.GroupLayout.PREFERRED_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.PREFERRED_SIZE)
+//                                    .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED)
+                                    .addComponent(jReviewVotesText,javax.swing.GroupLayout.PREFERRED_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.PREFERRED_SIZE)
 //                                .addComponent(jLabel9)
                                 .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED)
 //                                .addComponent(jTextField2, javax.swing.GroupLayout.PREFERRED_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.PREFERRED_SIZE)
@@ -1214,6 +1244,12 @@ public class HW3 extends javax.swing.JFrame {
     private javax.swing.JTextField jReviewFrom;
     private javax.swing.JLabel jReviewToLabel;
     private javax.swing.JTextField jReviewTo;
+    private javax.swing.JLabel jReviewStarsLabel;
+    private javax.swing.JComboBox jReviewStarsCombo;
+    private javax.swing.JTextField jReviewStarsText;
+    private javax.swing.JLabel jReviewVotesLabel;
+    private javax.swing.JComboBox jReviewVotesCombo;
+    private javax.swing.JTextField jReviewVotesText;
 
 
     // End of variables declaration//GEN-END:variables
