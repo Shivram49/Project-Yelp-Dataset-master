@@ -11,6 +11,8 @@ import java.io.File;
 import java.io.FileReader;
 import java.io.FileWriter;
 import java.io.IOException;
+import java.sql.Date;
+import java.text.DecimalFormat;
 import java.util.*;
 import java.util.HashMap;
 import java.util.HashSet;
@@ -410,7 +412,8 @@ public class Populate {
                 statement.setString(1, review_id);
                 statement.setInt(2, rating);
                 statement.setString(3, user_id);
-                statement.setTimestamp(4, Timestamp.valueOf(date + " 00:00:00"));
+                statement.setDate(4, java.sql.Date.valueOf(date));
+                //statement.setTimestamp(4, Timestamp.valueOf(date + " 00:00:00"));
                 statement.setString(5, text);
                 statement.setString(6, business_id);
                 statement.setInt(7, funny);
@@ -470,6 +473,7 @@ public class Populate {
                     ArrayList<String> list = new ArrayList<String>();
                     JSONArray cats = (JSONArray) jObj_business.get("categories");
 
+
                     String[] sample = {};
                     String sub_category = "";
                     String main_category = "";
@@ -515,7 +519,7 @@ public class Populate {
                             if (check_parts.length < 2) {
                                 state = my_check_state;
                             } else //System.out.println(my_check_state);
-                             if (check_parts[check_parts.length - 1].length() > 4) {
+                                if (check_parts[check_parts.length - 1].length() > 4) {
                                     pin = check_parts[check_parts.length - 1];
                                     state = "";
                                     for (int k = 0; k < check_parts.length - 1; k++) {
@@ -652,6 +656,14 @@ public class Populate {
             BufferedReader bufferedReader_user = new BufferedReader(fileReader_user);
             String line_user;
             String user_id, user_name;
+            String date;
+            int review_count;
+            int numberOfFriends;
+            int cool;
+            int funny;
+            int useful;
+            JSONObject obj;
+            Double averageStars;
             PreparedStatement statement;
             int tester = 0;
 
@@ -671,12 +683,34 @@ public class Populate {
 
                     user_id = jObj_user.getString("user_id");
                     user_name = jObj_user.getString("name");
+                    date = jObj_user.getString("yelping_since");
+                    review_count = jObj_user.getInt("review_count");
+                    DecimalFormat df = new DecimalFormat("#.##");
+                    averageStars = jObj_user.getDouble("average_stars");
+                    averageStars =  Double.parseDouble(df.format(averageStars));
+                    JSONArray numOfFriends = jObj_user.getJSONArray("friends");
+                    numberOfFriends = numOfFriends.length();
+                    obj = jObj_user.getJSONObject("votes");
 
+                    funny = obj.getInt("funny");
+                    cool = obj.getInt("cool");
+                    useful = obj.getInt("useful");
                     //System.out.println(user_name + "," + user_id);
                     user_id = formatString(user_id);
                     user_name = formatString(user_name);
 
-                    statement = con.prepareStatement("INSERT INTO YELP_USER VALUES('" + user_id + "', '" + user_name + "')");
+                    statement = con.prepareStatement("INSERT INTO YELP_USER (USER_ID, USER_NAME, MEMBER_SINCE, " +
+                            "REVIEW_COUNT, NUMBER_OF_FRIENDS, AVERAGE_STARS, VOTE_FUNNY, VOTE_COOL, VOTE_USEFUL)" +
+                            " VALUES(?,?,?,?,?,?,?,?,?)");
+                    statement.setString(1, user_id);
+                    statement.setString(2, user_name);
+                    statement.setDate(3, java.sql.Date.valueOf(date + "-01"));
+                    statement.setInt(4, review_count);
+                    statement.setInt(5, numberOfFriends);
+                    statement.setDouble(6, averageStars);
+                    statement.setInt(7, funny);
+                    statement.setInt(8, cool);
+                    statement.setInt(9, useful);
                     statement.executeUpdate();
                     statement.close();
 

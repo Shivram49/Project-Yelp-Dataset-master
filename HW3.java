@@ -111,6 +111,12 @@ public class HW3 extends javax.swing.JFrame {
         jVoteCool = new javax.swing.JLabel();
         jVoteCoolCombo = new javax.swing.JComboBox();
         jVoteCoolText = new javax.swing.JTextField();
+        jSearchForUser = new javax.swing.JComboBox();
+        jSearchForUserLabel = new javax.swing.JLabel();
+        jReviewFromLabel = new javax.swing.JLabel();
+        jReviewFrom = new javax.swing.JTextField();
+        jReviewToLabel = new javax.swing.JLabel();
+        jReviewTo = new javax.swing.JTextField();
 
         setDefaultCloseOperation(javax.swing.WindowConstants.EXIT_ON_CLOSE);
         setPreferredSize(new java.awt.Dimension(1600, 900));
@@ -179,8 +185,20 @@ public class HW3 extends javax.swing.JFrame {
         //set value search for
         jSearchFor.setModel(new javax.swing.DefaultComboBoxModel<>(new String[]{"AND","OR"}));
 
+        //set value searchforuser
+        jSearchForUser.setModel(new javax.swing.DefaultComboBoxModel<>(new String[]{"AND","OR"}));
+
         //set search for
         jSearchForLabel.setText("SEARCH FOR");
+
+        //set searchforuser label
+        jSearchForUserLabel.setText("SEARCH FOR USER");
+
+        //set jReviewFromlabel
+        jReviewFromLabel.setText("Review From");
+
+        //set jReviewTo
+        jReviewToLabel.setText("Review To");
 
         jLabel2.setText("From");
 
@@ -224,6 +242,7 @@ public class HW3 extends javax.swing.JFrame {
 
         jLabel11.setFont(new java.awt.Font("Tahoma", 0, 14)); // NOI18N
         jLabel11.setText("Most Visited");
+
 
 
 
@@ -307,7 +326,14 @@ public class HW3 extends javax.swing.JFrame {
                                     .addGroup(layout.createSequentialGroup()
                                         .addGroup(layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING, false)
                                             .addComponent(jTextField1,javax.swing.GroupLayout.PREFERRED_SIZE, 100, javax.swing.GroupLayout.PREFERRED_SIZE)
-                                            .addComponent(jLabel8))
+                                            .addComponent(jLabel8)
+
+                                        )
+                                            //    .addComponent(jReviewFrom,javax.swing.GroupLayout.PREFERRED_SIZE, 100, javax.swing.GroupLayout.PREFERRED_SIZE)
+//                                                .addComponent(jReviewFromLabel)
+//                                                .addComponent(jReviewTo,javax.swing.GroupLayout.PREFERRED_SIZE, 100, javax.swing.GroupLayout.PREFERRED_SIZE)
+//                                                .addComponent(jReviewToLabel)
+
 //                                            .addComponent(jLabel9)
 //                                            .addComponent(jLabel10)
 //                                            .addComponent(jTextField2)
@@ -390,6 +416,11 @@ public class HW3 extends javax.swing.JFrame {
                             .addGap(10,10,10)
                             .addComponent(jVoteCoolText,javax.swing.GroupLayout.PREFERRED_SIZE, 90, javax.swing.GroupLayout.PREFERRED_SIZE)
                     )
+                    .addGroup(layout.createSequentialGroup()//jsearchforuser horizontal ui
+                        .addComponent(jSearchForUserLabel,javax.swing.GroupLayout.PREFERRED_SIZE, 120, javax.swing.GroupLayout.PREFERRED_SIZE)
+                        .addGap(10,10,10)
+                        .addComponent(jSearchForUser,javax.swing.GroupLayout.PREFERRED_SIZE, 50, javax.swing.GroupLayout.PREFERRED_SIZE)
+                    )
         );
         layout.setVerticalGroup(
             layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
@@ -434,7 +465,13 @@ public class HW3 extends javax.swing.JFrame {
                                 .addComponent(jLabel8)
                                 .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED)
                                 .addComponent(jTextField1, javax.swing.GroupLayout.PREFERRED_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.PREFERRED_SIZE)
-                                .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED)
+//                                    .addComponent(jReviewFromLabel)
+//                                    .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED)
+//                                    .addComponent(jReviewFrom, javax.swing.GroupLayout.PREFERRED_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.PREFERRED_SIZE)
+//                                    .addComponent(jReviewToLabel)
+//                                    .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED)
+//                                    .addComponent(jReviewFromLabel, javax.swing.GroupLayout.PREFERRED_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.PREFERRED_SIZE)
+//                                .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED)
 //                                .addComponent(jLabel9)
                                 .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED)
 //                                .addComponent(jTextField2, javax.swing.GroupLayout.PREFERRED_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.PREFERRED_SIZE)
@@ -492,6 +529,11 @@ public class HW3 extends javax.swing.JFrame {
                                     .addComponent(jVoteCoolCombo,javax.swing.GroupLayout.PREFERRED_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.PREFERRED_SIZE)
                                     .addComponent(jVoteCoolText,javax.swing.GroupLayout.PREFERRED_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.PREFERRED_SIZE)
                             )
+                            .addGroup(layout.createParallelGroup(GroupLayout.Alignment.BASELINE)
+                                    .addComponent(jSearchForUserLabel,javax.swing.GroupLayout.PREFERRED_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.PREFERRED_SIZE)
+                                    .addComponent(jSearchForUser,javax.swing.GroupLayout.PREFERRED_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.PREFERRED_SIZE)
+                            )
+                            .addGap(40,40,40)
                     )
 
             )
@@ -1161,6 +1203,13 @@ public class HW3 extends javax.swing.JFrame {
     private javax.swing.JLabel jVoteCool;
     private javax.swing.JComboBox jVoteCoolCombo;
     private javax.swing.JTextField jVoteCoolText;
+    private javax.swing.JComboBox jSearchForUser;
+    private javax.swing.JLabel jSearchForUserLabel;
+    private javax.swing.JLabel jReviewFromLabel;
+    private javax.swing.JTextField jReviewFrom;
+    private javax.swing.JLabel jReviewToLabel;
+    private javax.swing.JTextField jReviewTo;
+
 
     // End of variables declaration//GEN-END:variables
 }
