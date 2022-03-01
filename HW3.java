@@ -4,6 +4,7 @@ package JavaAccess;
 import java.awt.Color;
 import java.awt.Component;
 import java.awt.event.*;
+import java.lang.reflect.Executable;
 import java.sql.*;
 import java.util.ArrayList;
 import java.util.logging.Level;
@@ -123,6 +124,10 @@ public class HW3 extends javax.swing.JFrame {
         jReviewVotesLabel = new javax.swing.JLabel();
         jReviewVotesCombo = new javax.swing.JComboBox();
         jReviewVotesText = new javax.swing.JTextField();
+        jUserScrollPane = new javax.swing.JScrollPane();
+        jExecuteQuery = new javax.swing.JButton();
+        jClearAllFilters = new javax.swing.JButton();
+        jUserTable = new javax.swing.JTable();
 
 
         setDefaultCloseOperation(javax.swing.WindowConstants.EXIT_ON_CLOSE);
@@ -158,6 +163,30 @@ public class HW3 extends javax.swing.JFrame {
                 return types [columnIndex];
             }
         });
+        jUserTable.setModel(new javax.swing.table.DefaultTableModel(
+                new Object [][] {
+                        {null, null, null, null,null,null},
+                        {null, null, null, null,null,null},
+                        {null, null, null, null,null,null},
+                        {null, null, null, null,null,null}
+                },
+                new String [] {
+                        "UserName", "Date Created", "Review count", "Number of Friends","average stars","total votes"
+                }
+        ) {
+            Class[] types = new Class [] {
+                    java.lang.String.class, java.lang.String.class, java.lang.String.class, java.lang.String.class, java.lang.Object.class, java.lang.Object.class
+            };
+
+            public Class getColumnClass(int columnIndex) {
+                return types [columnIndex];
+            }
+        });
+        jUserScrollPane.setViewportView(jUserTable);
+        //TODO:populate user scroll pane
+        jExecuteQuery.setText("Execute Query");
+        jClearAllFilters.setText("Clear Filters");
+
         jScrollPane3.setViewportView(jTable1);
 
         jScrollPane4.setMaximumSize(new java.awt.Dimension(300, 800));
@@ -390,6 +419,8 @@ public class HW3 extends javax.swing.JFrame {
 //                        .addComponent(jButton2, javax.swing.GroupLayout.PREFERRED_SIZE, 156, javax.swing.GroupLayout.PREFERRED_SIZE))
                     .addComponent(jScrollPane3, javax.swing.GroupLayout.PREFERRED_SIZE, 626, javax.swing.GroupLayout.PREFERRED_SIZE))
                 .addContainerGap(26, Short.MAX_VALUE))
+                    .addGroup(layout.createSequentialGroup()
+                            .addGroup(layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
                     .addGroup(layout.createSequentialGroup()//member since horizontal ui
                             .addComponent(jMemberSince,javax.swing.GroupLayout.PREFERRED_SIZE, 90, javax.swing.GroupLayout.PREFERRED_SIZE)
                             .addGap(10,10,10)
@@ -444,6 +475,16 @@ public class HW3 extends javax.swing.JFrame {
                         .addGap(10,10,10)
                         .addComponent(jSearchForUser,javax.swing.GroupLayout.PREFERRED_SIZE, 50, javax.swing.GroupLayout.PREFERRED_SIZE)
                     )
+                            )
+                            .addGap(505,505,505)
+                                    .addGroup(layout.createParallelGroup(GroupLayout.Alignment.TRAILING)
+                                            .addComponent(jUserScrollPane,javax.swing.GroupLayout.PREFERRED_SIZE, 620, javax.swing.GroupLayout.PREFERRED_SIZE)
+                                                    .addGroup(layout.createSequentialGroup()
+                                                            .addComponent(jExecuteQuery,javax.swing.GroupLayout.PREFERRED_SIZE, 310, javax.swing.GroupLayout.PREFERRED_SIZE)
+                                                            .addComponent(jClearAllFilters,javax.swing.GroupLayout.PREFERRED_SIZE, 310, javax.swing.GroupLayout.PREFERRED_SIZE)
+                                                    )
+                                    )
+                    )
         );
         layout.setVerticalGroup(
             layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
@@ -458,7 +499,7 @@ public class HW3 extends javax.swing.JFrame {
                         .addGroup(layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
                             //.addComponent(jButton1, javax.swing.GroupLayout.DEFAULT_SIZE, 50, Short.MAX_VALUE)
 //                            .addComponent(jButton2, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE)
-//                              .addComponent(jButton2, javax.swing.GroupLayout.DEFAULT_SIZE, 20, Short.MAX_VALUE)
+//                            .addComponent(jButton2, javax.swing.GroupLayout.DEFAULT_SIZE, 20, Short.MAX_VALUE)
                             .addGroup(layout.createSequentialGroup()
                                 .addGroup(layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
                                     .addComponent(jLabel5)
@@ -528,6 +569,7 @@ public class HW3 extends javax.swing.JFrame {
                                 .addComponent(jSearchForLabel)
                                 .addComponent(jSearchFor,javax.swing.GroupLayout.PREFERRED_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.PREFERRED_SIZE))
                         .addContainerGap(javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE)))
+                    .addGroup(layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
                     .addGroup(layout.createSequentialGroup()
                             .addGroup(layout.createParallelGroup(GroupLayout.Alignment.BASELINE)
                                     .addComponent(jMemberSince,javax.swing.GroupLayout.PREFERRED_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.PREFERRED_SIZE)
@@ -568,9 +610,18 @@ public class HW3 extends javax.swing.JFrame {
                                     .addComponent(jSearchForUserLabel,javax.swing.GroupLayout.PREFERRED_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.PREFERRED_SIZE)
                                     .addComponent(jSearchForUser,javax.swing.GroupLayout.PREFERRED_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.PREFERRED_SIZE)
                             )
-                            .addGap(40,40,40)
                     )
+                            .addGroup(layout.createSequentialGroup()
+                                    .addComponent(jUserScrollPane,javax.swing.GroupLayout.DEFAULT_SIZE, 300, Short.MAX_VALUE)
+                                            .addGroup(layout.createParallelGroup(GroupLayout.Alignment.LEADING)
+                                                    .addComponent(jExecuteQuery,javax.swing.GroupLayout.PREFERRED_SIZE, 30, javax.swing.GroupLayout.PREFERRED_SIZE)
+                                                    .addComponent(jClearAllFilters,javax.swing.GroupLayout.PREFERRED_SIZE, 30, javax.swing.GroupLayout.PREFERRED_SIZE)
+                                            )
+                            )
 
+
+            )
+                    .addGap(40,40,40)
             )
         );
 
@@ -578,7 +629,6 @@ public class HW3 extends javax.swing.JFrame {
     }// </editor-fold>//GEN-END:initComponents
 
     private void jButton1ActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_jButton1ActionPerformed
-        // TODO add your handling code here:
     }//GEN-LAST:event_jButton1ActionPerformed
 
     private void initmore() {
@@ -824,8 +874,8 @@ public class HW3 extends javax.swing.JFrame {
                 }
             }
             statement_text += ")";
-            //testing queriesßß
-//            System.out.println("Categories text");
+            //testing queries
+            System.out.println("Categories text");
 //            System.out.println(statement_text);
             statement = con.prepareStatement(statement_text);
             rs = statement.executeQuery();
@@ -1250,6 +1300,10 @@ public class HW3 extends javax.swing.JFrame {
     private javax.swing.JLabel jReviewVotesLabel;
     private javax.swing.JComboBox jReviewVotesCombo;
     private javax.swing.JTextField jReviewVotesText;
+    private javax.swing.JScrollPane jUserScrollPane;
+    private javax.swing.JButton jExecuteQuery;
+    private javax.swing.JButton jClearAllFilters;
+    private javax.swing.JTable jUserTable;
 
 
     // End of variables declaration//GEN-END:variables

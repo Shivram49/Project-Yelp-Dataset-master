@@ -440,7 +440,6 @@ public class Populate {
 
         String full_address;
 
-        // TODO code application logic here
         try {
             File file_user = new File(yelp_business_file);
             FileReader fileReader_user = new FileReader(file_user);
@@ -454,7 +453,6 @@ public class Populate {
             con = DriverManager.getConnection(DBURL, DBUSER, DBPASS);
 
             while ((line_user = bufferedReader_user.readLine()) != null) {
-                // TODO code application logic here
                 try {
 
                     JSONObject jObj_business = (JSONObject) new JSONTokener(line_user)
@@ -628,7 +626,6 @@ public class Populate {
                     statement.close();
                     //
                 } catch (JSONException e) {
-                    // TODO Auto-generated catch block
                     e.printStackTrace();
                 }
 
@@ -649,7 +646,6 @@ public class Populate {
 
     public static void parse_users() {
 
-        // TODO code application logic here
         try {
             File file_user = new File(yelp_user_file);
             FileReader fileReader_user = new FileReader(file_user);
@@ -674,7 +670,6 @@ public class Populate {
             con = DriverManager.getConnection(DBURL, DBUSER, DBPASS);
 
             while ((line_user = bufferedReader_user.readLine()) != null) {
-                // TODO code application logic here
                 tester++;
                 try {
 
@@ -715,7 +710,6 @@ public class Populate {
                     statement.close();
 
                 } catch (JSONException e) {
-                    // TODO Auto-generated catch block
                     e.printStackTrace();
                 }
 
