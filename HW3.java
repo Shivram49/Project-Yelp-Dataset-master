@@ -734,10 +734,10 @@ public class HW3 extends javax.swing.JFrame {
             }
         });
 
-        jButton1.addActionListener(new ActionListener() {
+        jExecuteQuery.addActionListener(new ActionListener() {//TODO:add search action here
             @Override
             public void actionPerformed(ActionEvent e) {
-                updateTable(null, 4, true);
+                updateUserTable();
             }
         });
 
@@ -772,9 +772,10 @@ public class HW3 extends javax.swing.JFrame {
             PreparedStatement statement3 = null;
             ResultSet rs3 = null;
 
-            Class.forName("oracle.jdbc.driver.OracleDriver");
-            Connection con = null;
-            con = DriverManager.getConnection(DBURL, DBUSER, DBPASS);
+//            Class.forName("oracle.jdbc.driver.OracleDriver");
+//            Connection con = null;
+//            con = DriverManager.getConnection(DBURL, DBUSER, DBPASS);
+            Connection con = getJDBCConnection();
 
             String attrib_string = "0000000000000000000000000000000000000000000"
                     + "000000000000000000000000000000000000000000000000000000000000000";
@@ -1114,9 +1115,79 @@ public class HW3 extends javax.swing.JFrame {
     }
 
 
-    //updates on user table
-    public void updateUserTable(){
+    public Connection getJDBCConnection() throws SQLException, ClassNotFoundException {
+        Class.forName("oracle.jdbc.driver.OracleDriver");
+        Connection con = null;
+        con = DriverManager.getConnection(DBURL, DBUSER, DBPASS);
+        return con;
+    }
 
+    //TODO:updates on user table
+    public void updateUserTable(){
+        try{
+            DefaultTableModel tmodel = new DefaultTableModel();
+            jUserTable.setModel(tmodel);
+            tmodel.addColumn("UserName");
+            tmodel.addColumn("Date Created");
+            tmodel.addColumn("Review Count");
+            tmodel.addColumn("Number of Friends");
+            tmodel.addColumn("Average Stars");
+            tmodel.addColumn("Total Votes");
+            Connection con =  getJDBCConnection();
+            PreparedStatement statement = null;
+            ResultSet rs = null;
+            String statement_text = "SELECT YELP_USER.USER_NAME, YELP_USER.MEMBER_SINCE, YELP_USER.REVIEW_COUNT, YELP_USER.NUMBER_OF_FRIENDS, YELP_USER.AVERAGE_STARS,\n"
+                    + "YELP_USER.VOTE_FUNNY + YELP_USER.VOTE_COOL + YELP_USER.VOTE_USEFUL AS VOTES\n"
+                    + "FROM YELP_USER ";
+
+            String[] userCols = new String[]{ "MEMBER_SINCE", "REVIEW_COUNT", "NUMBER_OF_FRIENDS", "AVERAGE_STARS",
+                    "VOTE_FUNNY","VOTE_USEFUL","VOTE_COOL"};
+            JComboBox[] userComboList = new JComboBox[]{jMemberSinceCombo, jReviewCountCombo, jNumberOfFriendsCombo, jAverageStarsCombo,
+                    jVoteFunnyCombo,
+                    jVoteUsefulCombo,
+                    jVoteCoolCombo};
+
+            JTextField[] userTextList = new JTextField[]{ jMemberSinceText, jReviewCountText, jNumberOfFriendsText, jAverageStarsText,
+                        jVoteFunnyText,
+                        jVoteUsefulText,
+                        jVoteCoolText
+            };
+            boolean whereAdded = false;
+            String searchForUserVal = jSearchForUser.getSelectedItem().toString();
+            int searchForLength = searchForUserVal.length() + 2;
+            for(int i = 0;i < userTextList.length;i++){
+                String currText = userTextList[i].getText().toString();
+                if(!currText.equals("")){
+                    if(!whereAdded){
+                        whereAdded = true;
+                        statement_text += "WHERE ";
+                    }
+                    currText =  (userCols[i].equals("MEMBER_SINCE"))?"'" + currText + "'": currText;
+                    statement_text += "YELP_USER." + userCols[i] + userComboList[i].getSelectedItem().toString()
+                            + currText + " " + searchForUserVal + " ";
+                }
+            }
+            if(whereAdded)
+                statement_text = statement_text.substring(0,statement_text.length() - searchForLength);
+            statement = con.prepareStatement(statement_text);
+            rs = statement.executeQuery();
+            while(rs.next()) {
+                Object[] toAdd = new Object[]{rs.getString("USER_NAME"),
+                        rs.getString("MEMBER_SINCE"),
+                        rs.getString("REVIEW_COUNT"),
+                        rs.getString("NUMBER_OF_FRIENDS"),
+                        rs.getString("AVERAGE_STARS"),
+                        rs.getString("VOTES")
+                };
+                tmodel.addRow(toAdd);
+            }
+
+
+        } catch (ClassNotFoundException ex) {
+            Logger.getLogger(HW3.class.getName()).log(Level.SEVERE, null, ex);
+        } catch (SQLException ex) {
+            Logger.getLogger(HW3.class.getName()).log(Level.SEVERE, null, ex);
+        }
     }
 
     public static String formatString(String str) {
