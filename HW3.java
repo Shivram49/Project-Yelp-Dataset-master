@@ -741,7 +741,8 @@ public class HW3 extends javax.swing.JFrame {
             }
         });
 
-        jButton2.addActionListener(new ActionListener() {
+        //TODO: Clear button rename
+        jClearAllFilters.addActionListener(new ActionListener() {
             @Override
             public void actionPerformed(ActionEvent e) {
                 updateTable(null, 5, true);
@@ -875,7 +876,7 @@ public class HW3 extends javax.swing.JFrame {
             }
             statement_text += ")";
             //testing queries
-            System.out.println("Categories text");
+//            System.out.println("Categories text");
 //            System.out.println(statement_text);
             statement = con.prepareStatement(statement_text);
             rs = statement.executeQuery();
@@ -944,12 +945,14 @@ public class HW3 extends javax.swing.JFrame {
                     }
                 }
                 //System.out.println("check address: " + check_city + check_pin + check_state);
+//                System.out.println("Selected Attributes : " + selected_attributes);
+//                boolean checkAllRows = false;
                 if (selected_attributes.size() > 0) {
                     for (int i = 0; i < selected_attributes.size(); i++) {
                         for (int j = 0; j < all_attributes.size(); j++) {
                             if (all_attributes.get(j).equals(selected_attributes.get(i))) {
                                 //j is what we want
-                                if (jCheckBox1.isSelected()) {
+                                if (jCheckBox1.isSelected()) { //TODO:To be changed
                                     if (buf_me.charAt(j) != '1') {
                                         check_the_row = false;
                                     }

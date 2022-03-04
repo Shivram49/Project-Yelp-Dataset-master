@@ -129,11 +129,11 @@ public class SecondJFrame extends javax.swing.JFrame {
 
             while (rs.next()) {
                 String myuser = null;
-                statement2 = con.prepareStatement("SELECT NAME FROM YELP_USER WHERE USER_ID = ?");
+                statement2 = con.prepareStatement("SELECT USER_NAME FROM YELP_USER WHERE USER_ID = ?");
                 statement2.setString(1, rs.getString("USER_ID"));
                 rs2 = statement2.executeQuery();
                 while (rs2.next())
-                    myuser = rs2.getString("NAME");
+                    myuser = rs2.getString("USER_NAME");
                 tmodel.addRow(new Object[]{rs.getString("PUBLISH_DATE"), rs.getString("RATING"),
                     rs.getString("REVIEW_TEXT"), myuser, rs.getString("VOTES_USEFUL")});
 
