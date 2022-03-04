@@ -745,6 +745,8 @@ public class HW3 extends javax.swing.JFrame {
         jClearAllFilters.addActionListener(new ActionListener() {
             @Override
             public void actionPerformed(ActionEvent e) {
+                DefaultTableModel dtm = (DefaultTableModel) jUserTable.getModel();
+                dtm.setRowCount(0);
                 updateTable(null, 5, true);
             }
         });
