@@ -29,13 +29,16 @@ public class SecondJFrame extends javax.swing.JFrame {
         initmore();
     }
 
-    public SecondJFrame(String check, String title) {
+    public SecondJFrame(String check, String title, String toDisplay) {
         Miral = check;
         Title = title;
         initComponents();
-        initmore();
-        
-        
+        if(toDisplay.equals("Business")){
+            initmore();
+        }
+        else{
+            initUserReviews();
+        }
     }
     
     /**
@@ -94,6 +97,64 @@ public class SecondJFrame extends javax.swing.JFrame {
         pack();
     }// </editor-fold>//GEN-END:initComponents
 
+    private void initUserReviews(){
+        DefaultTableModel tmodel = new DefaultTableModel();
+        jTable1.setModel(tmodel);
+        tmodel.addColumn("ReviewDate");
+        tmodel.addColumn("Stars");
+        tmodel.addColumn("Review Text");
+        tmodel.addColumn("UserID");
+        tmodel.addColumn("Usefull Votes");
+        setDefaultCloseOperation(JFrame.DISPOSE_ON_CLOSE);
+
+        setTitle(Title);
+        jButton1.setText("CLOSE");
+        jButton1.addActionListener(new ActionListener() {
+            @Override
+            public void actionPerformed(ActionEvent e) {
+                dispose();
+            }
+        });
+
+
+        try {
+            PreparedStatement statement = null;
+            PreparedStatement statement2 = null;
+            ResultSet rs = null;
+            ResultSet rs2 = null;
+
+            Class.forName("oracle.jdbc.driver.OracleDriver");
+            Connection con = null;
+            con = DriverManager.getConnection(DBURL, DBUSER, DBPASS);
+            statement = con.prepareStatement("SELECT PUBLISH_DATE, RATING, REVIEW_TEXT, USER_ID,VOTES_USEFUL FROM REVIEWS WHERE USER_ID = ?");
+            statement.setString(1, Miral);
+            rs = statement.executeQuery();
+
+            while (rs.next()) {
+                String myuser = null;
+                statement2 = con.prepareStatement("SELECT USER_NAME FROM YELP_USER WHERE USER_ID = ?");
+                statement2.setString(1, rs.getString("USER_ID"));
+                rs2 = statement2.executeQuery();
+                while (rs2.next())
+                    myuser = rs2.getString("USER_NAME");
+                tmodel.addRow(new Object[]{rs.getString("PUBLISH_DATE"), rs.getString("RATING"),
+                        rs.getString("REVIEW_TEXT"), myuser, rs.getString("VOTES_USEFUL")});
+
+            }
+
+            statement.close();
+            con.close();
+
+            System.out.println(Miral);
+            pack();
+            validate();
+            repaint();
+        } catch (ClassNotFoundException ex) {
+            Logger.getLogger(SecondJFrame.class.getName()).log(Level.SEVERE, null, ex);
+        } catch (SQLException ex) {
+            Logger.getLogger(SecondJFrame.class.getName()).log(Level.SEVERE, null, ex);
+        }
+    }
     private void initmore() {
         DefaultTableModel tmodel = new DefaultTableModel();
         jTable1.setModel(tmodel);

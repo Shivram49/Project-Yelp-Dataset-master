@@ -36,6 +36,7 @@ public class HW3 extends javax.swing.JFrame {
     ArrayList<String> selected_sub_categories = new ArrayList<String>();
     ArrayList<String> selected_attributes = new ArrayList<String>();
     ArrayList<String> all_bids = new ArrayList<String>();
+    ArrayList<String> all_uids = new ArrayList<String>();
 
     /**
      * Creates new form NewJFrame
@@ -183,7 +184,6 @@ public class HW3 extends javax.swing.JFrame {
             }
         });
         jUserScrollPane.setViewportView(jUserTable);
-        //TODO:populate user scroll pane
         jExecuteQuery.setText("Execute Query");
         jClearAllFilters.setText("Clear Filters");
 
@@ -678,16 +678,32 @@ public class HW3 extends javax.swing.JFrame {
                 if (!(all_bids.size() < row)) {
                     setEnabled(false);
                     jTable1.setOpaque(false);
-                    SecondJFrame secondFrame = new SecondJFrame(all_bids.get(row), jTable1.getValueAt(row, 0).toString());
+                    SecondJFrame secondFrame = new SecondJFrame(all_bids.get(row), jTable1.getValueAt(row, 0).toString(),"Business");
                     secondFrame.setVisible(true);
                     setEnabled(true);
                 }
             }
         });
+
+        //Clears business query results.
         DefaultTableModel dtm = (DefaultTableModel) jTable1.getModel();
         dtm.setRowCount(0);
         jTable1.setDefaultRenderer(Object.class, new MyTableCellRender());
 
+        jUserTable.addMouseListener(new java.awt.event.MouseAdapter() {
+            @Override
+            public void mouseClicked(java.awt.event.MouseEvent evt) {
+                int row = jUserTable.rowAtPoint(evt.getPoint());
+//                System.out.println(row);
+                if (!(all_uids.size() < row)) {
+                    setEnabled(false);
+                    jTable1.setOpaque(false);
+                    SecondJFrame secondFrame = new SecondJFrame(all_uids.get(row), jUserTable.getValueAt(row, 0).toString(),"User");
+                    secondFrame.setVisible(true);
+                    setEnabled(true);
+                }
+            }
+        });
         jCheckBox1.setText("Search All");
 
         jCheckBox1.setVisible(false);
@@ -734,14 +750,13 @@ public class HW3 extends javax.swing.JFrame {
             }
         });
 
-        jExecuteQuery.addActionListener(new ActionListener() {//TODO:add search action here
+        jExecuteQuery.addActionListener(new ActionListener() {
             @Override
             public void actionPerformed(ActionEvent e) {
                 updateUserTable();
             }
         });
 
-        //TODO: Clear button rename
         jClearAllFilters.addActionListener(new ActionListener() {
             @Override
             public void actionPerformed(ActionEvent e) {
@@ -1124,7 +1139,6 @@ public class HW3 extends javax.swing.JFrame {
         return con;
     }
 
-    //TODO:updates on user table
     public void updateUserTable(){
         try{
             DefaultTableModel tmodel = new DefaultTableModel();
@@ -1138,7 +1152,8 @@ public class HW3 extends javax.swing.JFrame {
             Connection con =  getJDBCConnection();
             PreparedStatement statement = null;
             ResultSet rs = null;
-            String statement_text = "SELECT YELP_USER.USER_NAME, YELP_USER.MEMBER_SINCE, YELP_USER.REVIEW_COUNT, YELP_USER.NUMBER_OF_FRIENDS, YELP_USER.AVERAGE_STARS,\n"
+
+            String statement_text = "SELECT YELP_USER.USER_ID, YELP_USER.USER_NAME, YELP_USER.MEMBER_SINCE, YELP_USER.REVIEW_COUNT, YELP_USER.NUMBER_OF_FRIENDS, YELP_USER.AVERAGE_STARS,\n"
                     + "YELP_USER.VOTE_FUNNY + YELP_USER.VOTE_COOL + YELP_USER.VOTE_USEFUL AS VOTES\n"
                     + "FROM YELP_USER ";
 
@@ -1173,6 +1188,7 @@ public class HW3 extends javax.swing.JFrame {
                 statement_text = statement_text.substring(0,statement_text.length() - searchForLength);
             statement = con.prepareStatement(statement_text);
             rs = statement.executeQuery();
+            all_uids.clear();
             while(rs.next()) {
                 Object[] toAdd = new Object[]{rs.getString("USER_NAME"),
                         rs.getString("MEMBER_SINCE"),
@@ -1182,6 +1198,7 @@ public class HW3 extends javax.swing.JFrame {
                         rs.getString("VOTES")
                 };
                 tmodel.addRow(toAdd);
+                all_uids.add(rs.getString("user_id"));
             }
 
 
