@@ -678,6 +678,7 @@ public class HW3 extends javax.swing.JFrame {
                 if (!(all_bids.size() < row)) {
                     setEnabled(false);
                     jTable1.setOpaque(false);
+                    //TODO:Add text filter list
                     SecondJFrame secondFrame = new SecondJFrame(all_bids.get(row), jTable1.getValueAt(row, 0).toString(),"Business");
                     secondFrame.setVisible(true);
                     setEnabled(true);
@@ -898,7 +899,21 @@ public class HW3 extends javax.swing.JFrame {
                     statement_text += " " + searchForVal + " SELECT BID FROM BUSINESS_TO_ATTRIBUTE WHERE ATTRIB= " + "'" + formatString(selected_attributes.get(i)) + "'";
                 }
             }
+
+            if(!jReviewFrom.getText().toString().equals("")){
+                statement_text += " INTERSECT SELECT BID FROM REVIEWS WHERE PUBLISH_DATE >" + "'" + jReviewFrom.getText().toString() + "'";
+            }
+            if(!jReviewTo.getText().toString().equals("")){
+                statement_text += " INTERSECT SELECT BID FROM REVIEWS WHERE PUBLISH_DATE >" + "'" + jReviewTo.getText().toString() + "'";
+            }
+            if(!jReviewVotesText.getText().toString().equals("")){
+                statement_text += " INTERSECT SELECT BID FROM REVIEWS WHERE VOTES_FUNNY + VOTES_COOL + VOTES_USEFUL " + jReviewVotesCombo.getSelectedItem().toString()  + "'" + jReviewVotesText.getText().toString() + "'";
+            }
+            if(!jReviewStarsText.getText().toString().equals("")){
+                statement_text += " INTERSECT SELECT BID FROM BUSINESS WHERE RATING " + jReviewStarsCombo.getSelectedItem().toString()  + "'" + jReviewStarsText.getText().toString() + "'";
+            }
             statement_text += ")";
+
 
             //testing queries
 //            System.out.println("Categories text");
@@ -1048,7 +1063,7 @@ public class HW3 extends javax.swing.JFrame {
 //                    check_row++;
 //                }
 //            }
-            statement_text = "SELECT ATTRIB FROM BUSINESS_TO_ATTRIBUTE \n"
+            statement_text = "SELECT DISTINCT ATTRIB FROM BUSINESS_TO_ATTRIBUTE \n"
                     + "WHERE BID IN(";
              int check_row = 0;
             if(selected_sub_categories.size() > 0){
