@@ -23,7 +23,7 @@ import javax.swing.table.TableModel;
  */
 /**
  *
- * @author lizilina
+ * @author Shivram Krishnamurthy
  */
 public class HW3 extends javax.swing.JFrame {
 
@@ -892,7 +892,14 @@ public class HW3 extends javax.swing.JFrame {
                     statement_text += " " + searchForVal + " SELECT BID FROM BUSINESS_SUB_CATEGORY WHERE B_SUB_CATEGORY= " + "'" + formatString(selected_sub_categories.get(i)) + "'";
                 }
             }
+            if(selected_attributes.size() > 0){
+                statement_text += " INTERSECT SELECT BID FROM BUSINESS_TO_ATTRIBUTE WHERE ATTRIB= " + "'" + formatString(selected_attributes.get(0)) + "'";
+                for (int i = 1; i < selected_attributes.size(); i++) {
+                    statement_text += " " + searchForVal + " SELECT BID FROM BUSINESS_TO_ATTRIBUTE WHERE ATTRIB= " + "'" + formatString(selected_attributes.get(i)) + "'";
+                }
+            }
             statement_text += ")";
+
             //testing queries
 //            System.out.println("Categories text");
 //            System.out.println(statement_text);
@@ -965,36 +972,44 @@ public class HW3 extends javax.swing.JFrame {
                 //System.out.println("check address: " + check_city + check_pin + check_state);
 //                System.out.println("Selected Attributes : " + selected_attributes);
 //                boolean checkAllRows = false;
-                if (selected_attributes.size() > 0) {
-                    for (int i = 0; i < selected_attributes.size(); i++) {
-                        for (int j = 0; j < all_attributes.size(); j++) {
-                            if (all_attributes.get(j).equals(selected_attributes.get(i))) {
-                                //j is what we want
-                                if (jCheckBox1.isSelected()) { //TODO:To be changed
-                                    if (buf_me.charAt(j) != '1') {
-                                        check_the_row = false;
-                                    }
-                                } else if (buf_me.charAt(j) == '1') {
-                                    check_any_row = true;
-                                }
-                            }
-                        }
-                    }
+//                if (selected_attributes.size() > 0) {
+//                    for (int i = 0; i < all_attributes.size(); i++) {
+////                        for (int j = 0; j < all_attributes.size(); j++) {
+////                            if (all_attributes.get(j).equals(selected_attributes.get(i))) {
+//                                //j is what we want
+//                                if (jSearchFor.getSelectedItem().toString().equals("AND")) { //TODO:To be changed
+//                                    if(selected_attributes.contains(all_attributes.get(i))) {
+//                                        if (buf_me.charAt(i) != '1') {
+//                                            check_the_row = false;
+//                                        }
+//                                    }
+//                                    else{
+//                                        if (buf_me.charAt(i) != '0') {
+//                                            check_the_row = false;
+//                                        }
+//                                    }
+//                                } else if (buf_me.charAt(i) == '1') {
+//                                    check_any_row = true;
+//                                }
+////                            }
+////                        }
+//                    }
+////                    if (check_city && check_state && check_pin) {
+//////                        if ((jSearchFor.getSelectedItem().toString().equals("AND") && check_the_row) || ((!jSearchFor.getSelectedItem().toString().equals("AND")) && check_any_row)) {
+////                            tmodel.addRow(new Object[]{check_if_open + rs.getString("B_NAME"), rs.getString("CITY"), rs.getString("STATE_NM"), rs.getString("RATING"), mychecking});
+////                            check_how_many++;
+////                            all_bids.add(my_bid);
+////                            if (mychecking != null) {
+////                                if (best_checkin < Integer.parseInt(mychecking)) {
+////                                    iamthebest = rs.getString("B_NAME");
+////                                    best_checkin = Integer.parseInt(mychecking);
+////                                }
+////                            }
+////
+//////                        }
+////                    }
+//                } else
                     if (check_city && check_state && check_pin) {
-                        if ((jCheckBox1.isSelected() && check_the_row) || ((!jCheckBox1.isSelected()) && check_any_row)) {
-                            tmodel.addRow(new Object[]{check_if_open + rs.getString("B_NAME"), rs.getString("CITY"), rs.getString("STATE_NM"), rs.getString("RATING"), mychecking});
-                            check_how_many++;
-                            all_bids.add(my_bid);
-                            if (mychecking != null) {
-                                if (best_checkin < Integer.parseInt(mychecking)) {
-                                    iamthebest = rs.getString("B_NAME");
-                                    best_checkin = Integer.parseInt(mychecking);
-                                }
-                            }
-
-                        }
-                    }
-                } else if (check_city && check_state && check_pin) {
                     tmodel.addRow(new Object[]{check_if_open + rs.getString("B_NAME"), rs.getString("CITY"), rs.getString("STATE_NM"), rs.getString("RATING"), mychecking});
                     check_how_many++;
                     all_bids.add(my_bid);
@@ -1019,20 +1034,33 @@ public class HW3 extends javax.swing.JFrame {
             }
 
             statement.close();
-            statement_text = "SELECT ATTRIB FROM (SELECT ROWNUM AS ROW_NUMBER,"
-                    + "NATIVE_ATTRIBUTE.* FROM NATIVE_ATTRIBUTE) "
-                    + "WHERE ROW_NUMBER = ";
-            int check_row = 0;
-            for (int i = 0; i < attrib_string.length(); i++) {
-                if (buf_all.charAt(i) == '1') {
-                    if (check_row == 0) {
-                        statement_text += Integer.toString(i + 1);
-                    } else {
-                        statement_text += " OR ROW_NUMBER = " + Integer.toString(i + 1);
-                    }
+//            statement_text = "SELECT ATTRIB FROM (SELECT ROWNUM AS ROW_NUMBER,"
+//                    + "NATIVE_ATTRIBUTE.* FROM NATIVE_ATTRIBUTE) "
+//                    + "WHERE ROW_NUMBER = ";
+//            int check_row = 0;
+//            for (int i = 0; i < attrib_string.length(); i++) {
+//                if (buf_all.charAt(i) == '1') {
+//                    if (check_row == 0) {
+//                        statement_text += Integer.toString(i + 1);
+//                    } else {
+//                        statement_text += " OR ROW_NUMBER = " + Integer.toString(i + 1);
+//                    }
+//                    check_row++;
+//                }
+//            }
+            statement_text = "SELECT ATTRIB FROM BUSINESS_TO_ATTRIBUTE \n"
+                    + "WHERE BID IN(";
+             int check_row = 0;
+            if(selected_sub_categories.size() > 0){
+                statement_text += "SELECT BID FROM BUSINESS_SUB_CATEGORY WHERE B_SUB_CATEGORY= '" + selected_sub_categories.get(0) + "' ";
+                for(int i = 1;i < selected_sub_categories.size();i++){
+                    statement_text += searchForVal + " SELECT BID FROM BUSINESS_SUB_CATEGORY WHERE B_SUB_CATEGORY='" + selected_sub_categories.get(i) + "' ";
                     check_row++;
                 }
             }
+            statement_text += ")";
+//            System.out.println("Attributes text");
+//            System.out.println(statement_text);
             if ((check_row > 0 &&(val != 4))) {
                 statement = con.prepareStatement(statement_text);
                 rs = statement.executeQuery();
