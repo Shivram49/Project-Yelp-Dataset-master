@@ -959,7 +959,7 @@ public class HW3 extends javax.swing.JFrame {
             if(filtersPresent){
                 statement_text += ")";
             }
-            statement_text += ")";
+            statement_text += ") ORDER BY BUSINESS.B_NAME";
 
 
             //testing queries
@@ -1113,17 +1113,38 @@ public class HW3 extends javax.swing.JFrame {
 //            }
             statement_text = "SELECT DISTINCT ATTRIB FROM BUSINESS_TO_ATTRIBUTE \n";
 //             int check_row = 0;
+            boolean addBrack = false;
+            if(selected_categories.size() > 0 || selected_sub_categories.size() > 0){
+                statement_text += "WHERE BID IN(";
+                addBrack = true;
+            }
+            boolean subcatpresent = false;
             if(selected_sub_categories.size() > 0){
-                statement_text += "WHERE BID IN(SELECT BID FROM BUSINESS_SUB_CATEGORY WHERE B_SUB_CATEGORY= '" + selected_sub_categories.get(0) + "' ";
+                statement_text += "( SELECT BID FROM BUSINESS_SUB_CATEGORY WHERE B_SUB_CATEGORY= '" + selected_sub_categories.get(0) + "' ";
                 for(int i = 1;i < selected_sub_categories.size();i++){
                     statement_text += searchForVal + " SELECT BID FROM BUSINESS_SUB_CATEGORY WHERE B_SUB_CATEGORY='" + selected_sub_categories.get(i) + "' ";
 //                    check_row++;
                 }
                 statement_text += ")";
+                subcatpresent = true;
             }
+            if(selected_categories.size() > 0){
+                if(subcatpresent){
+                    statement_text += " INTERSECT ";
+                }
+                statement_text += "( SELECT BID FROM BUSINESS_CATEGORY WHERE B_CATEGORY= '" + selected_categories.get(0) + "' ";
+                for(int i = 1;i < selected_categories.size();i++){
+                    statement_text += searchForVal + " SELECT BID FROM BUSINESS_CATEGORY WHERE B_CATEGORY='" + selected_categories.get(i) + "' ";
+//                    check_row++;
+                }
+                statement_text += ")";
+            }
+            if(addBrack)
+                statement_text += ")";
+            statement_text += " ORDER BY ATTRIB";
             //TODO:Attributes text
-//            System.out.println("Attributes text");
-//            System.out.println(statement_text);
+            System.out.println("Attributes text");
+            System.out.println(statement_text);
             if (val != 4) {
                 statement = con.prepareStatement(statement_text);
                 rs = statement.executeQuery();
@@ -1172,8 +1193,8 @@ public class HW3 extends javax.swing.JFrame {
                         statement_text += searchForVal + " SELECT BID FROM BUSINESS_CATEGORY WHERE B_CATEGORY= " + "'" + selected_categories.get(i) + "'";
                     }
                 }
-                statement_text += ")";
-                //testing queries
+                statement_text += ") ORDER BY BUSINESS_SUB_CATEGORY.B_SUB_CATEGORY";
+                //TODO:Subcategories testing queries
 //                System.out.println("Subcategories text");
 //                System.out.println(statement_text);
                 statement = con.prepareStatement(statement_text);
