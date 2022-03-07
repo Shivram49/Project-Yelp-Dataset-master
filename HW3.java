@@ -679,7 +679,19 @@ public class HW3 extends javax.swing.JFrame {
                     setEnabled(false);
                     jTable1.setOpaque(false);
                     //TODO:Add text filter list
-                    SecondJFrame secondFrame = new SecondJFrame(all_bids.get(row), jTable1.getValueAt(row, 0).toString(),"Business");
+                    String[] addFilters = new String[4];
+                    if(!jReviewFrom.getText().toString().equals(""))
+                        addFilters[0] = "PUBLISH_DATE >= :" + " :'" + jReviewFrom.getText().toString() + "'";
+                    if(!jReviewTo.getText().toString().equals(""))
+                        addFilters[1] = "PUBLISH_DATE <= :" + " :'" + jReviewTo.getText().toString() + "'";
+                    if(!jReviewStarsText.getText().toString().equals(""))
+                        addFilters[2] = "RATING:" + jReviewStarsCombo.getSelectedItem().toString() + ":" + jReviewStarsText.getText().toString();
+                    if(!jReviewVotesText.getText().toString().equals("")){
+                        addFilters[3] = "VOTES_USEFUL:" + jReviewVotesCombo.getSelectedItem().toString() + ":" + jReviewVotesText.getText().toString();
+                    }
+
+
+                    SecondJFrame secondFrame = new SecondJFrame(all_bids.get(row), jTable1.getValueAt(row, 0).toString(),"Business",addFilters);
                     secondFrame.setVisible(true);
                     setEnabled(true);
                 }
@@ -696,10 +708,20 @@ public class HW3 extends javax.swing.JFrame {
             public void mouseClicked(java.awt.event.MouseEvent evt) {
                 int row = jUserTable.rowAtPoint(evt.getPoint());
 //                System.out.println(row);
+                String[] addFilters = new String[4];
+                if(!jReviewFrom.getText().toString().equals(""))
+                    addFilters[0] = "PUBLISH_DATE >= :" + " :'" + jReviewFrom.getText().toString() + "'";
+                if(!jReviewTo.getText().toString().equals(""))
+                    addFilters[1] = "PUBLISH_DATE <= :" + " :'" + jReviewTo.getText().toString() + "'";
+                if(!jReviewStarsText.getText().toString().equals(""))
+                    addFilters[2] = "RATING:" + jReviewStarsCombo.getSelectedItem().toString() + ":" + jReviewStarsText.getText().toString();
+                if(!jReviewVotesText.getText().toString().equals("")){
+                    addFilters[3] = "VOTES_USEFUL:" + jReviewVotesCombo.getSelectedItem().toString() + ":" + jReviewVotesText.getText().toString();
+                }
                 if (!(all_uids.size() < row)) {
                     setEnabled(false);
                     jTable1.setOpaque(false);
-                    SecondJFrame secondFrame = new SecondJFrame(all_uids.get(row), jUserTable.getValueAt(row, 0).toString(),"User");
+                    SecondJFrame secondFrame = new SecondJFrame(all_uids.get(row), jUserTable.getValueAt(row, 0).toString(),"User",addFilters);
                     secondFrame.setVisible(true);
                     setEnabled(true);
                 }
@@ -854,7 +876,7 @@ public class HW3 extends javax.swing.JFrame {
                 return;
             }
 
-            String statement_text = "SELECT ATTRIB FROM NATIVE_ATTRIBUTE";
+            String statement_text = "SELECT DISTINCT ATTRIB FROM BUSINESS_TO_ATTRIBUTE";
             statement = con.prepareStatement(statement_text);
             rs = statement.executeQuery();
 
@@ -876,46 +898,72 @@ public class HW3 extends javax.swing.JFrame {
                     + "BUSINESS.B_NAME, BUSINESS.ATTRIB, BUSINESS.CITY, BUSINESS.STATE_NM, \n"
                     + "BUSINESS.RATING FROM BUSINESS \n"
                     + "WHERE BUSINESS.BID IN( \n"
-                    + "SELECT BID FROM BUSINESS_CATEGORY\n"
+                    + "(SELECT DISTINCT BID FROM BUSINESS_CATEGORY\n"
                     + "WHERE B_CATEGORY=\n"
                     + "'" + formatString(selected_categories.get(0)) + "'";
 
             if (selected_categories.size() > 0) {
                 for (int i = 1; i < selected_categories.size(); i++) {
                     System.out.println(i);
-                    statement_text += " " + searchForVal + " SELECT BID FROM BUSINESS_CATEGORY WHERE B_CATEGORY= " + "'" + formatString(selected_categories.get(i)) + "'";
+                    statement_text += " " + searchForVal + " SELECT DISTINCT BID FROM BUSINESS_CATEGORY WHERE B_CATEGORY= " + "'" + formatString(selected_categories.get(i)) + "'";
                 }
             }
+            statement_text += ")";
             //fixing subcategories issue.
             if (selected_sub_categories.size() > 0) {
-                statement_text += " INTERSECT SELECT BID FROM BUSINESS_SUB_CATEGORY WHERE B_SUB_CATEGORY= " + "'" + formatString(selected_sub_categories.get(0)) + "'";
+                statement_text += " INTERSECT (SELECT DISTINCT BID FROM BUSINESS_SUB_CATEGORY WHERE B_SUB_CATEGORY= " + "'" + formatString(selected_sub_categories.get(0)) + "'";
                 for (int i = 1; i < selected_sub_categories.size(); i++) {
-                    statement_text += " " + searchForVal + " SELECT BID FROM BUSINESS_SUB_CATEGORY WHERE B_SUB_CATEGORY= " + "'" + formatString(selected_sub_categories.get(i)) + "'";
+                    statement_text += " " + searchForVal + " SELECT DISTINCT BID FROM BUSINESS_SUB_CATEGORY WHERE B_SUB_CATEGORY= " + "'" + formatString(selected_sub_categories.get(i)) + "'";
                 }
+                statement_text += ")";
             }
             if(selected_attributes.size() > 0){
-                statement_text += " INTERSECT SELECT BID FROM BUSINESS_TO_ATTRIBUTE WHERE ATTRIB= " + "'" + formatString(selected_attributes.get(0)) + "'";
+                statement_text += " INTERSECT (SELECT DISTINCT BID FROM BUSINESS_TO_ATTRIBUTE WHERE ATTRIB= " + "'" + formatString(selected_attributes.get(0)) + "'";
                 for (int i = 1; i < selected_attributes.size(); i++) {
-                    statement_text += " " + searchForVal + " SELECT BID FROM BUSINESS_TO_ATTRIBUTE WHERE ATTRIB= " + "'" + formatString(selected_attributes.get(i)) + "'";
+                    statement_text += " " + searchForVal + " SELECT DISTINCT BID FROM BUSINESS_TO_ATTRIBUTE WHERE ATTRIB= " + "'" + formatString(selected_attributes.get(i)) + "'";
                 }
+                statement_text += ")";
             }
-
+            JTextField[] jReviewTextFields = new JTextField[]{jReviewFrom,jReviewTo,jReviewStarsText,jReviewVotesText};
+            int firstInd = 0;
+            boolean filtersPresent = false;
+            for(JTextField curr : jReviewTextFields){
+                if(!curr.getText().toString().equals("")){
+                    statement_text += " INTERSECT ( SELECT DISTINCT BID FROM REVIEWS WHERE ";
+                    filtersPresent = true;
+                    break;
+                }
+                firstInd++;
+            }
             if(!jReviewFrom.getText().toString().equals("")){
-                statement_text += " INTERSECT SELECT BID FROM REVIEWS WHERE PUBLISH_DATE >" + "'" + jReviewFrom.getText().toString() + "'";
+                statement_text += "PUBLISH_DATE >=" + "'" + jReviewFrom.getText().toString() + "' ";
             }
             if(!jReviewTo.getText().toString().equals("")){
-                statement_text += " INTERSECT SELECT BID FROM REVIEWS WHERE PUBLISH_DATE >" + "'" + jReviewTo.getText().toString() + "'";
+                if(firstInd != 1){
+                    statement_text += "AND ";
+                }
+                statement_text += " PUBLISH_DATE <=" + "'" + jReviewTo.getText().toString() + "' ";
             }
             if(!jReviewVotesText.getText().toString().equals("")){
-                statement_text += " INTERSECT SELECT BID FROM REVIEWS WHERE VOTES_FUNNY + VOTES_COOL + VOTES_USEFUL " + jReviewVotesCombo.getSelectedItem().toString()  + "'" + jReviewVotesText.getText().toString() + "'";
+                if(firstInd != 2){
+                    statement_text += "AND ";
+                }
+                statement_text += " VOTES_FUNNY + VOTES_COOL + VOTES_USEFUL " + jReviewVotesCombo.getSelectedItem().toString() + jReviewVotesText.getText().toString() + " ";
             }
             if(!jReviewStarsText.getText().toString().equals("")){
-                statement_text += " INTERSECT SELECT BID FROM BUSINESS WHERE RATING " + jReviewStarsCombo.getSelectedItem().toString()  + "'" + jReviewStarsText.getText().toString() + "'";
+                if(firstInd != 3){
+                    statement_text += "AND ";
+                }
+                statement_text += " RATING " + jReviewStarsCombo.getSelectedItem().toString() + jReviewStarsText.getText().toString();
+            }
+            if(filtersPresent){
+                statement_text += ")";
             }
             statement_text += ")";
 
 
             //testing queries
+            //TODO:Categoreies text
 //            System.out.println("Categories text");
 //            System.out.println(statement_text);
             statement = con.prepareStatement(statement_text);
@@ -1063,20 +1111,20 @@ public class HW3 extends javax.swing.JFrame {
 //                    check_row++;
 //                }
 //            }
-            statement_text = "SELECT DISTINCT ATTRIB FROM BUSINESS_TO_ATTRIBUTE \n"
-                    + "WHERE BID IN(";
-             int check_row = 0;
+            statement_text = "SELECT DISTINCT ATTRIB FROM BUSINESS_TO_ATTRIBUTE \n";
+//             int check_row = 0;
             if(selected_sub_categories.size() > 0){
-                statement_text += "SELECT BID FROM BUSINESS_SUB_CATEGORY WHERE B_SUB_CATEGORY= '" + selected_sub_categories.get(0) + "' ";
+                statement_text += "WHERE BID IN(SELECT BID FROM BUSINESS_SUB_CATEGORY WHERE B_SUB_CATEGORY= '" + selected_sub_categories.get(0) + "' ";
                 for(int i = 1;i < selected_sub_categories.size();i++){
                     statement_text += searchForVal + " SELECT BID FROM BUSINESS_SUB_CATEGORY WHERE B_SUB_CATEGORY='" + selected_sub_categories.get(i) + "' ";
-                    check_row++;
+//                    check_row++;
                 }
+                statement_text += ")";
             }
-            statement_text += ")";
+            //TODO:Attributes text
 //            System.out.println("Attributes text");
 //            System.out.println(statement_text);
-            if ((check_row > 0 &&(val != 4))) {
+            if (val != 4) {
                 statement = con.prepareStatement(statement_text);
                 rs = statement.executeQuery();
                 while (rs.next()) {
@@ -1232,6 +1280,7 @@ public class HW3 extends javax.swing.JFrame {
             statement = con.prepareStatement(statement_text);
             rs = statement.executeQuery();
             all_uids.clear();
+            int numberOfUserResults = 0;
             while(rs.next()) {
                 Object[] toAdd = new Object[]{rs.getString("USER_NAME"),
                         rs.getString("MEMBER_SINCE"),
@@ -1242,8 +1291,9 @@ public class HW3 extends javax.swing.JFrame {
                 };
                 tmodel.addRow(toAdd);
                 all_uids.add(rs.getString("user_id"));
+                numberOfUserResults++;
             }
-
+            System.out.println("Number of user results : " + numberOfUserResults);
 
         } catch (ClassNotFoundException ex) {
             Logger.getLogger(HW3.class.getName()).log(Level.SEVERE, null, ex);

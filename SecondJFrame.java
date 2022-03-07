@@ -23,22 +23,24 @@ public class SecondJFrame extends javax.swing.JFrame {
     public static final String DBURL = "jdbc:oracle:thin:@localhost:1521:xe";
     public static final String DBUSER = "system";
     public static final String DBPASS = "oracle";
-
+    public String[] additionalFilters;
     public SecondJFrame() {
         initComponents();
         initmore();
     }
 
-    public SecondJFrame(String check, String title, String toDisplay) {
+    public SecondJFrame(String check, String title, String toDisplay,String[] additionalFilters) {
         Miral = check;
         Title = title;
         initComponents();
+        this.additionalFilters = additionalFilters;
         if(toDisplay.equals("Business")){
             initmore();
         }
         else{
             initUserReviews();
         }
+
     }
     
     /**
@@ -126,7 +128,17 @@ public class SecondJFrame extends javax.swing.JFrame {
             Class.forName("oracle.jdbc.driver.OracleDriver");
             Connection con = null;
             con = DriverManager.getConnection(DBURL, DBUSER, DBPASS);
-            statement = con.prepareStatement("SELECT PUBLISH_DATE, RATING, REVIEW_TEXT, USER_ID,VOTES_USEFUL FROM REVIEWS WHERE USER_ID = ?");
+            String statement_query = "SELECT PUBLISH_DATE, RATING, REVIEW_TEXT, USER_ID,VOTES_USEFUL FROM REVIEWS WHERE USER_ID = ?";
+            //Adding filters to the query
+            for(int i = 0;i < 4;i++){
+                if(additionalFilters[i] != null) {
+                    String[] currFilter = additionalFilters[i].split(":");
+                    statement_query += " AND " + currFilter[0] + currFilter[1] + currFilter[2];
+                }
+            }
+//            System.out.println(statement_query);
+//            statement = con.prepareStatement("SELECT PUBLISH_DATE, RATING, REVIEW_TEXT, USER_ID,VOTES_USEFUL FROM REVIEWS WHERE USER_ID = ?");
+            statement = con.prepareStatement(statement_query);
             statement.setString(1, Miral);
             rs = statement.executeQuery();
 
@@ -184,7 +196,18 @@ public class SecondJFrame extends javax.swing.JFrame {
             Class.forName("oracle.jdbc.driver.OracleDriver");
             Connection con = null;
             con = DriverManager.getConnection(DBURL, DBUSER, DBPASS);
-            statement = con.prepareStatement("SELECT PUBLISH_DATE, RATING, REVIEW_TEXT, USER_ID,VOTES_USEFUL FROM REVIEWS WHERE BID = ?");
+//            statement = con.prepareStatement("SELECT PUBLISH_DATE, RATING, REVIEW_TEXT, USER_ID,VOTES_USEFUL FROM REVIEWS WHERE BID = ?");
+            String statement_query = "SELECT PUBLISH_DATE, RATING, REVIEW_TEXT, USER_ID,VOTES_USEFUL FROM REVIEWS WHERE BID = ?";
+            //Adding filters to the query
+            for(int i = 0;i < 4;i++){
+                if(additionalFilters[i] != null) {
+                    String[] currFilter = additionalFilters[i].split(":");
+                    statement_query += " AND " + currFilter[0] + currFilter[1] + currFilter[2];
+                }
+            }
+//            System.out.println("review query");
+//            System.out.println(statement_query);
+            statement = con.prepareStatement(statement_query);
             statement.setString(1, Miral);
             rs = statement.executeQuery();
 
