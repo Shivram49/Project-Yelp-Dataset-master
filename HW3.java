@@ -342,30 +342,6 @@ public class HW3 extends javax.swing.JFrame {
                             .addGroup(layout.createSequentialGroup()
                                 .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.UNRELATED)
                                 .addGroup(layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
-//                                    .addGroup(layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
-//                                        .addGroup(layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
-//                                            .addGroup(layout.createSequentialGroup()
-//                                                .addGroup(layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING, false)
-//                                                    .addComponent(jCheckBox1)
-//                                                    .addComponent(jComboBox1, 0, javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE)
-//                                                    .addGroup(layout.createSequentialGroup()
-//                                                        .addGroup(layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
-//                                                            .addComponent(jComboBox3, javax.swing.GroupLayout.PREFERRED_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.PREFERRED_SIZE)
-//                                                            .addComponent(jComboBox4, javax.swing.GroupLayout.PREFERRED_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.PREFERRED_SIZE))
-//                                                        .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED)
-//                                                        .addGroup(layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
-//                                                            .addComponent(jToggleButton2, javax.swing.GroupLayout.Alignment.TRAILING, javax.swing.GroupLayout.PREFERRED_SIZE, 45, javax.swing.GroupLayout.PREFERRED_SIZE)
-//                                                            .addComponent(jToggleButton1, javax.swing.GroupLayout.PREFERRED_SIZE, 45, javax.swing.GroupLayout.PREFERRED_SIZE))))
-//                                                .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED))
-//                                            .addGroup(javax.swing.GroupLayout.Alignment.TRAILING, layout.createSequentialGroup()
-//                                                .addComponent(jLabel3)
-//                                                .addGap(50, 50, 50)))
-//                                        .addGroup(javax.swing.GroupLayout.Alignment.TRAILING, layout.createSequentialGroup()
-//                                            .addComponent(jLabel4)
-//                                            .addGap(46, 46, 46)))
-//                                    .addGroup(javax.swing.GroupLayout.Alignment.TRAILING, layout.createSequentialGroup()
-//                                        .addComponent(jLabel2)
-//                                        .addGap(40, 40, 40))
                                     .addGroup(layout.createSequentialGroup()
                                         .addGroup(layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING, false)
                                             .addComponent(jTextField1,javax.swing.GroupLayout.PREFERRED_SIZE, 100, javax.swing.GroupLayout.PREFERRED_SIZE)
@@ -381,20 +357,9 @@ public class HW3 extends javax.swing.JFrame {
                                                 .addComponent(jReviewVotesCombo,javax.swing.GroupLayout.PREFERRED_SIZE, 50, javax.swing.GroupLayout.PREFERRED_SIZE)
                                                 .addComponent(jReviewVotesText)
                                         )
-                                            //    .addComponent(jReviewFrom,javax.swing.GroupLayout.PREFERRED_SIZE, 100, javax.swing.GroupLayout.PREFERRED_SIZE)
-//                                                .addComponent(jReviewFromLabel)
-//                                                .addComponent(jReviewTo,javax.swing.GroupLayout.PREFERRED_SIZE, 100, javax.swing.GroupLayout.PREFERRED_SIZE)
-//                                                .addComponent(jReviewToLabel)
-
-//                                            .addComponent(jLabel9)
-//                                            .addComponent(jLabel10)
-//                                            .addComponent(jTextField2)
-//                                            .addComponent(jTextField3)
-//                                            .addComponent(jScrollPane6, javax.swing.GroupLayout.PREFERRED_SIZE, 105, javax.swing.GroupLayout.PREFERRED_SIZE))
-                                        .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED))))
+                                            .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED))))
                             .addGroup(layout.createSequentialGroup()
                                 .addGap(27, 27, 27)
-//                                .addComponent(jLabel11)
                                 .addGap(33, 33, 33))))
                     .addGroup(layout.createSequentialGroup()
                         .addGap(44, 44, 44)
@@ -413,10 +378,6 @@ public class HW3 extends javax.swing.JFrame {
                     .addGroup(layout.createSequentialGroup()
                         .addGap(100, 100, 100)
                         .addComponent(jLabel1))
-//                        .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED, javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE)
-                        //.addComponent(jButton1, javax.swing.GroupLayout.PREFERRED_SIZE, 150, javax.swing.GroupLayout.PREFERRED_SIZE)
-//                        .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED)
-//                        .addComponent(jButton2, javax.swing.GroupLayout.PREFERRED_SIZE, 156, javax.swing.GroupLayout.PREFERRED_SIZE))
                     .addComponent(jScrollPane3, javax.swing.GroupLayout.PREFERRED_SIZE, 626, javax.swing.GroupLayout.PREFERRED_SIZE))
                 .addContainerGap(26, Short.MAX_VALUE))
                     .addGroup(layout.createSequentialGroup()
@@ -497,9 +458,6 @@ public class HW3 extends javax.swing.JFrame {
                             .addComponent(jScrollPane3, javax.swing.GroupLayout.DEFAULT_SIZE, 300, Short.MAX_VALUE))
                         .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED)
                         .addGroup(layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
-                            //.addComponent(jButton1, javax.swing.GroupLayout.DEFAULT_SIZE, 50, Short.MAX_VALUE)
-//                            .addComponent(jButton2, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE)
-//                            .addComponent(jButton2, javax.swing.GroupLayout.DEFAULT_SIZE, 20, Short.MAX_VALUE)
                             .addGroup(layout.createSequentialGroup()
                                 .addGroup(layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
                                     .addComponent(jLabel5)
@@ -508,25 +466,7 @@ public class HW3 extends javax.swing.JFrame {
                     .addGroup(layout.createSequentialGroup()
                         .addGroup(layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
                             .addGroup(layout.createSequentialGroup()
-//                                .addComponent(jLabel2)
-//                                .addGap(8, 8, 8)
-//                                .addGroup(layout.createParallelGroup(javax.swing.GroupLayout.Alignment.BASELINE)
-//                                    .addComponent(jComboBox3, javax.swing.GroupLayout.PREFERRED_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.PREFERRED_SIZE)
-//                                    .addComponent(jToggleButton1))
-//                                .addGap(9, 9, 9)
-//                                .addComponent(jLabel3)
-//                                .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED)
-//                                .addGroup(layout.createParallelGroup(javax.swing.GroupLayout.Alignment.BASELINE)
-//                                    .addComponent(jComboBox4, javax.swing.GroupLayout.PREFERRED_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.PREFERRED_SIZE)
-//                                    .addComponent(jToggleButton2))
-//                                .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.UNRELATED)
-//                                .addComponent(jLabel4)
-//                                .addGap(5, 5, 5)
-//                                .addComponent(jComboBox1, javax.swing.GroupLayout.PREFERRED_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.PREFERRED_SIZE)
-//                                .addGap(185, 185, 185)
-//                                .addComponent(jCheckBox1)
-//                                .addGap(21, 21, 21)
-                                .addComponent(jLabel8)
+                       .addComponent(jLabel8)
                                 .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED)
                                 .addComponent(jTextField1, javax.swing.GroupLayout.PREFERRED_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.PREFERRED_SIZE)
                                     .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED)
@@ -538,27 +478,14 @@ public class HW3 extends javax.swing.JFrame {
                                     .addComponent(jReviewTo, javax.swing.GroupLayout.PREFERRED_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.PREFERRED_SIZE)
                                 .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED)
                                             .addComponent(jReviewStarsLabel,javax.swing.GroupLayout.PREFERRED_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.PREFERRED_SIZE)
-//                                    .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED)
                                             .addComponent(jReviewStarsCombo,javax.swing.GroupLayout.PREFERRED_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.PREFERRED_SIZE)
-//                                    .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED)
                                             .addComponent(jReviewStarsText,javax.swing.GroupLayout.PREFERRED_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.PREFERRED_SIZE)
-//                                    .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED)
                                     .addComponent(jReviewVotesLabel,javax.swing.GroupLayout.PREFERRED_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.PREFERRED_SIZE)
-//                                    .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED)
                                     .addComponent(jReviewVotesCombo,javax.swing.GroupLayout.PREFERRED_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.PREFERRED_SIZE)
-//                                    .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED)
                                     .addComponent(jReviewVotesText,javax.swing.GroupLayout.PREFERRED_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.PREFERRED_SIZE)
-//                                .addComponent(jLabel9)
                                 .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED)
-//                                .addComponent(jTextField2, javax.swing.GroupLayout.PREFERRED_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.PREFERRED_SIZE)
                                 .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED)
-//                                .addComponent(jLabel10)
                                 .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED))
-//                                .addComponent(jTextField3, javax.swing.GroupLayout.PREFERRED_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.PREFERRED_SIZE)
-//                                .addGap(70, 70, 70)
-//                                .addComponent(jLabel11)
-//                                .addGap(15, 15, 15))
-//                                .addComponent(jScrollPane6, javax.swing.GroupLayout.PREFERRED_SIZE, 146, javax.swing.GroupLayout.PREFERRED_SIZE))
                             .addGroup(layout.createParallelGroup(javax.swing.GroupLayout.Alignment.TRAILING, false)
                                 .addComponent(jScrollPane5, javax.swing.GroupLayout.Alignment.LEADING, javax.swing.GroupLayout.DEFAULT_SIZE, 300, Short.MAX_VALUE)
                                 .addComponent(jScrollPane4, javax.swing.GroupLayout.Alignment.LEADING, javax.swing.GroupLayout.DEFAULT_SIZE, 300, Short.MAX_VALUE)))
@@ -641,7 +568,6 @@ public class HW3 extends javax.swing.JFrame {
             con = DriverManager.getConnection(DBURL, DBUSER, DBPASS);
             statement = con.prepareStatement("SELECT CATEGORY FROM NATIVE_CATEGORY");
             rs = statement.executeQuery();
-            //native category is just the initial business category on the first screen
             while (rs.next()) {
                 JCheckBox mycheckbox = new JCheckBox();
                 mycheckbox.setText(rs.getString("CATEGORY"));
@@ -707,7 +633,6 @@ public class HW3 extends javax.swing.JFrame {
             @Override
             public void mouseClicked(java.awt.event.MouseEvent evt) {
                 int row = jUserTable.rowAtPoint(evt.getPoint());
-//                System.out.println(row);
                 String[] addFilters = new String[4];
                 if(!jReviewFrom.getText().toString().equals(""))
                     addFilters[0] = "PUBLISH_DATE >= :" + " :'" + jReviewFrom.getText().toString() + "'";
@@ -803,7 +728,6 @@ public class HW3 extends javax.swing.JFrame {
             tmodel.addColumn("City");
             tmodel.addColumn("State");
             tmodel.addColumn("Stars");
-//            tmodel.addColumn("Chekins");
             ArrayList<String> all_attributes = new ArrayList<String>();
             all_bids.clear();
 
@@ -812,9 +736,6 @@ public class HW3 extends javax.swing.JFrame {
             PreparedStatement statement3 = null;
             ResultSet rs3 = null;
 
-//            Class.forName("oracle.jdbc.driver.OracleDriver");
-//            Connection con = null;
-//            con = DriverManager.getConnection(DBURL, DBUSER, DBPASS);
             Connection con = getJDBCConnection();
 
             String attrib_string = "0000000000000000000000000000000000000000000"
@@ -909,7 +830,6 @@ public class HW3 extends javax.swing.JFrame {
                 }
             }
             statement_text += ")";
-            //fixing subcategories issue.
             if (selected_sub_categories.size() > 0) {
                 statement_text += " INTERSECT (SELECT DISTINCT BID FROM BUSINESS_SUB_CATEGORY WHERE B_SUB_CATEGORY= " + "'" + formatString(selected_sub_categories.get(0)) + "'";
                 for (int i = 1; i < selected_sub_categories.size(); i++) {
@@ -963,8 +883,8 @@ public class HW3 extends javax.swing.JFrame {
 
 
             //testing queries
-            //TODO:Categoreies text
-//            System.out.println("Categories text");
+            //TODO:Business query text
+//            System.out.println("Business text");
 //            System.out.println(statement_text);
             statement = con.prepareStatement(statement_text);
             rs = statement.executeQuery();
@@ -998,7 +918,6 @@ public class HW3 extends javax.swing.JFrame {
                 if (jComboBox1.getSelectedItem().toString() != "NONE") {
                     check_time = check_time(check_time_open, check_time_close, jComboBox3.getSelectedItem().toString(),
                             jComboBox4.getSelectedItem().toString(), jToggleButton1.isSelected(), jToggleButton2.isSelected());
-                    //System.out.println("Completed check_time: " + check_time);
                     if (!check_time) {
                         continue;
                     }
@@ -1032,46 +951,6 @@ public class HW3 extends javax.swing.JFrame {
                         check_pin = false;
                     }
                 }
-                //System.out.println("check address: " + check_city + check_pin + check_state);
-//                System.out.println("Selected Attributes : " + selected_attributes);
-//                boolean checkAllRows = false;
-//                if (selected_attributes.size() > 0) {
-//                    for (int i = 0; i < all_attributes.size(); i++) {
-////                        for (int j = 0; j < all_attributes.size(); j++) {
-////                            if (all_attributes.get(j).equals(selected_attributes.get(i))) {
-//                                //j is what we want
-//                                if (jSearchFor.getSelectedItem().toString().equals("AND")) { //TODO:To be changed
-//                                    if(selected_attributes.contains(all_attributes.get(i))) {
-//                                        if (buf_me.charAt(i) != '1') {
-//                                            check_the_row = false;
-//                                        }
-//                                    }
-//                                    else{
-//                                        if (buf_me.charAt(i) != '0') {
-//                                            check_the_row = false;
-//                                        }
-//                                    }
-//                                } else if (buf_me.charAt(i) == '1') {
-//                                    check_any_row = true;
-//                                }
-////                            }
-////                        }
-//                    }
-////                    if (check_city && check_state && check_pin) {
-//////                        if ((jSearchFor.getSelectedItem().toString().equals("AND") && check_the_row) || ((!jSearchFor.getSelectedItem().toString().equals("AND")) && check_any_row)) {
-////                            tmodel.addRow(new Object[]{check_if_open + rs.getString("B_NAME"), rs.getString("CITY"), rs.getString("STATE_NM"), rs.getString("RATING"), mychecking});
-////                            check_how_many++;
-////                            all_bids.add(my_bid);
-////                            if (mychecking != null) {
-////                                if (best_checkin < Integer.parseInt(mychecking)) {
-////                                    iamthebest = rs.getString("B_NAME");
-////                                    best_checkin = Integer.parseInt(mychecking);
-////                                }
-////                            }
-////
-//////                        }
-////                    }
-//                } else
                     if (check_city && check_state && check_pin) {
                     tmodel.addRow(new Object[]{check_if_open + rs.getString("B_NAME"), rs.getString("CITY"), rs.getString("STATE_NM"), rs.getString("RATING"), mychecking});
                     check_how_many++;
@@ -1097,22 +976,7 @@ public class HW3 extends javax.swing.JFrame {
             }
 
             statement.close();
-//            statement_text = "SELECT ATTRIB FROM (SELECT ROWNUM AS ROW_NUMBER,"
-//                    + "NATIVE_ATTRIBUTE.* FROM NATIVE_ATTRIBUTE) "
-//                    + "WHERE ROW_NUMBER = ";
-//            int check_row = 0;
-//            for (int i = 0; i < attrib_string.length(); i++) {
-//                if (buf_all.charAt(i) == '1') {
-//                    if (check_row == 0) {
-//                        statement_text += Integer.toString(i + 1);
-//                    } else {
-//                        statement_text += " OR ROW_NUMBER = " + Integer.toString(i + 1);
-//                    }
-//                    check_row++;
-//                }
-//            }
             statement_text = "SELECT DISTINCT ATTRIB FROM BUSINESS_TO_ATTRIBUTE \n";
-//             int check_row = 0;
             boolean addBrack = false;
             if(selected_categories.size() > 0 || selected_sub_categories.size() > 0){
                 statement_text += "WHERE BID IN(";
@@ -1123,7 +987,6 @@ public class HW3 extends javax.swing.JFrame {
                 statement_text += "( SELECT BID FROM BUSINESS_SUB_CATEGORY WHERE B_SUB_CATEGORY= '" + selected_sub_categories.get(0) + "' ";
                 for(int i = 1;i < selected_sub_categories.size();i++){
                     statement_text += searchForVal + " SELECT BID FROM BUSINESS_SUB_CATEGORY WHERE B_SUB_CATEGORY='" + selected_sub_categories.get(i) + "' ";
-//                    check_row++;
                 }
                 statement_text += ")";
                 subcatpresent = true;
@@ -1135,7 +998,6 @@ public class HW3 extends javax.swing.JFrame {
                 statement_text += "( SELECT BID FROM BUSINESS_CATEGORY WHERE B_CATEGORY= '" + selected_categories.get(0) + "' ";
                 for(int i = 1;i < selected_categories.size();i++){
                     statement_text += searchForVal + " SELECT BID FROM BUSINESS_CATEGORY WHERE B_CATEGORY='" + selected_categories.get(i) + "' ";
-//                    check_row++;
                 }
                 statement_text += ")";
             }
@@ -1143,8 +1005,8 @@ public class HW3 extends javax.swing.JFrame {
                 statement_text += ")";
             statement_text += " ORDER BY ATTRIB";
             //TODO:Attributes text
-            System.out.println("Attributes text");
-            System.out.println(statement_text);
+//            System.out.println("Attributes text");
+//            System.out.println(statement_text);
             if (val != 4) {
                 statement = con.prepareStatement(statement_text);
                 rs = statement.executeQuery();
@@ -1165,6 +1027,7 @@ public class HW3 extends javax.swing.JFrame {
                             JCheckBox checkbox = (JCheckBox) source;
                             if (e.getStateChange() == ItemEvent.SELECTED) {
                                 // the checkbox was just selected
+                                //TODO:SELECTED Categories Notif
                                 //System.out.println("selected");
                                 System.out.println(checkbox.getText());
                                 updateTable(checkbox.getText(), 3, true);
@@ -1346,7 +1209,6 @@ public class HW3 extends javax.swing.JFrame {
         Timestamp choice_ts_open = null;
         Timestamp choice_ts_close = null;
 
-        //System.out.println("My God: " + open_choice + close_choice);
 
         if (open_choice != "None") {
 
