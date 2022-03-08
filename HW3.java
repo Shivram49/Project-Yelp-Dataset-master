@@ -147,17 +147,18 @@ public class HW3 extends javax.swing.JFrame {
 
         jTable1.setModel(new javax.swing.table.DefaultTableModel(
             new Object [][] {
-                {null, null, null, null},
-                {null, null, null, null},
-                {null, null, null, null},
-                {null, null, null, null}
+                    {null, null, null, null,null,null,null,null,null},
+                    {null, null, null, null,null,null,null,null,null},
+                    {null, null, null, null,null,null,null,null,null},
+                    {null, null, null, null,null,null,null,null,null}
             },
             new String [] {
-                "Business", "City", "State", "Stars"
+                    "Full Address", "City", "Review Count", "Business Name","Longitude","Latitude","State Name","Stars","Open"
             }
         ) {
             Class[] types = new Class [] {
-                java.lang.String.class, java.lang.String.class, java.lang.String.class, java.lang.String.class, java.lang.Object.class
+                    java.lang.String.class, java.lang.String.class, java.lang.Integer.class, java.lang.String.class, java.lang.Double.class,
+                    java.lang.Double.class,java.lang.String.class,java.lang.Integer.class,java.lang.String.class
             };
 
             public Class getColumnClass(int columnIndex) {
@@ -724,10 +725,15 @@ public class HW3 extends javax.swing.JFrame {
         try {
             DefaultTableModel tmodel = new DefaultTableModel();
             jTable1.setModel(tmodel);
-            tmodel.addColumn("Business");
+            tmodel.addColumn("Full Name");
             tmodel.addColumn("City");
+            tmodel.addColumn("Review Count");
+            tmodel.addColumn("Business Name");
+            tmodel.addColumn("Longitude");
+            tmodel.addColumn("Latitude");
             tmodel.addColumn("State");
             tmodel.addColumn("Stars");
+            tmodel.addColumn("Whether Open");
             ArrayList<String> all_attributes = new ArrayList<String>();
             all_bids.clear();
 
@@ -814,9 +820,9 @@ public class HW3 extends javax.swing.JFrame {
                 Combo1 = "SUNDAY";
             }
 
-            statement_text = "SELECT DISTINCT BUSINESS.BID, BUSINESS.B_OPEN, BUSINESS.CHECKIN, BUSINESS.PIN, BUSINESS." + Combo1 + "_TIME_OPEN, "
-                    + "BUSINESS." + Combo1 + "_TIME_CLOSE, "
-                    + "BUSINESS.B_NAME, BUSINESS.ATTRIB, BUSINESS.CITY, BUSINESS.STATE_NM, \n"
+            statement_text = "SELECT DISTINCT BUSINESS.BID, BUSINESS.B_OPEN, BUSINESS.CHECKIN, BUSINESS.PIN,\n "
+                    + "BUSINESS.B_NAME, BUSINESS.ATTRIB,BUSINESS.STREET, BUSINESS.CITY, BUSINESS.STATE_NM, \n"
+                    + "BUSINESS.REVIEW_CNT, BUSINESS.LONGITUDE, BUSINESS.LATITUDE,"
                     + "BUSINESS.RATING FROM BUSINESS \n"
                     + "WHERE BUSINESS.BID IN( \n"
                     + "(SELECT DISTINCT BID FROM BUSINESS_CATEGORY\n"
@@ -895,33 +901,33 @@ public class HW3 extends javax.swing.JFrame {
             while (rs.next()) {
                 boolean check_the_row = true;
                 boolean check_any_row = false;
-                String key_attribute = rs.getString("ATTRIB");//doubt: not sure if attrib exists in the returned columns.
-                int go_to_length = Integer.min(attrib_string.length(), key_attribute.length());
-                StringBuffer buf_me = new StringBuffer(key_attribute);
-                for (int i = 0; i < go_to_length; i++) {
-                    if (buf_me.charAt(i) == '1') {
-                        buf_all.setCharAt(i, '1');
-                    }
-                }
-
-                Timestamp check_time_open = rs.getTimestamp(Combo1 + "_TIME_OPEN");
-                Timestamp check_time_close = rs.getTimestamp(Combo1 + "_TIME_CLOSE");
+//                String key_attribute = rs.getString("ATTRIB");//doubt: not sure if attrib exists in the returned columns.
+//                int go_to_length = Integer.min(attrib_string.length(), key_attribute.length());
+//                StringBuffer buf_me = new StringBuffer(key_attribute);
+//                for (int i = 0; i < go_to_length; i++) {
+//                    if (buf_me.charAt(i) == '1') {
+//                        buf_all.setCharAt(i, '1');
+//                    }
+//                }
+//
+//                Timestamp check_time_open = rs.getTimestamp(Combo1 + "_TIME_OPEN");
+//                Timestamp check_time_close = rs.getTimestamp(Combo1 + "_TIME_CLOSE");
 
                 boolean check_time = true;
                 String check_if_open = rs.getString("B_OPEN");
-                if (check_if_open.equals("false")) {
-                    check_if_open = "CLOSED: ";
-                } else {
-                    check_if_open = "";
-                }
-
-                if (jComboBox1.getSelectedItem().toString() != "NONE") {
-                    check_time = check_time(check_time_open, check_time_close, jComboBox3.getSelectedItem().toString(),
-                            jComboBox4.getSelectedItem().toString(), jToggleButton1.isSelected(), jToggleButton2.isSelected());
-                    if (!check_time) {
-                        continue;
-                    }
-                }
+//                if (check_if_open.equals("false")) {
+//                    check_if_open = "CLOSED: ";
+//                } else {
+//                    check_if_open = "";
+//                }
+//
+//                if (jComboBox1.getSelectedItem().toString() != "NONE") {
+//                    check_time = check_time(check_time_open, check_time_close, jComboBox3.getSelectedItem().toString(),
+//                            jComboBox4.getSelectedItem().toString(), jToggleButton1.isSelected(), jToggleButton2.isSelected());
+//                    if (!check_time) {
+//                        continue;
+//                    }
+//                }
 
                 String my_bid = rs.getString("BID");
                 String mycheck = rs.getString("CHECKIN");
@@ -952,7 +958,10 @@ public class HW3 extends javax.swing.JFrame {
                     }
                 }
                     if (check_city && check_state && check_pin) {
-                    tmodel.addRow(new Object[]{check_if_open + rs.getString("B_NAME"), rs.getString("CITY"), rs.getString("STATE_NM"), rs.getString("RATING"), mychecking});
+                        String fullAddress = rs.getString("STREET") + "," +rs.getString("CITY") + ","+ rs.getString("STATE_NM");
+                        tmodel.addRow(new Object[]{fullAddress, rs.getString("CITY"),rs.getInt("REVIEW_CNT"),
+                                rs.getString("B_NAME"),rs.getDouble("LONGITUDE"),rs.getDouble("LATITUDE"),
+                                rs.getString("STATE_NM"),rs.getInt("RATING"), check_if_open});
                     check_how_many++;
                     all_bids.add(my_bid);
                     if (mychecking != null) {
@@ -1384,20 +1393,20 @@ class MyTableCellRender extends DefaultTableCellRenderer {
         setOpaque(true);
     }
 
-    public Component getTableCellRendererComponent(JTable table, Object value, boolean isSelected, boolean hasFocus, int row, int column) {
-
-        String Number = (String) value;
-
-        setForeground(Color.black);
-        setBackground(Color.white);
-        if (Number != null) {
-            if (Number.contains("CLOSED")) {
-                setForeground(Color.white);
-                setBackground(Color.red);
-            }
-        }
-
-        setText(value != null ? value.toString() : "");
-        return this;
-    }
+//    public Component getTableCellRendererComponent(JTable table, Object value, boolean isSelected, boolean hasFocus, int row, int column) {
+//
+//        String Number = (String) value;
+//
+//        setForeground(Color.black);
+//        setBackground(Color.white);
+//        if (Number != null) {
+//            if (Number.contains("CLOSED")) {
+//                setForeground(Color.white);
+//                setBackground(Color.red);
+//            }
+//        }
+//
+//        setText(value != null ? value.toString() : "");
+//        return this;
+//    }
 }

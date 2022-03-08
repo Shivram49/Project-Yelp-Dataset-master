@@ -47,7 +47,7 @@ import java.util.Arrays;
  *
  * /**
  *
- * @author lizilina
+ * @author Shivram Krishnamurthy
  */
 public class Populate {
 
@@ -221,7 +221,11 @@ public class Populate {
     }
 
     public static void parse_attributes_and_categories() {
-        String[] Main_categories = {"Transportation", "Shopping", "Active Life", "Arts & Entertainment", "Automotive", "Car Rental", "Cafes", "Beauty & Spas", "Convenience Stores", "Department Stores", "Education", "Event Planning & Services", "Flowers & Gifts", "Food", "Health & Medical", "Home Services", "Home & Garden", "Hospitals", "Hotels & Travel", "Hardware Stores", "Grocery", "Medical Centers", "Nurseries & Gardening", "Nightlife", "Restaurants", "Drugstores", "Dentists", "Doctors"};
+        String[] Main_categories = {"Transportation", "Shopping", "Active Life", "Arts & Entertainment", "Automotive",
+                "Car Rental", "Cafes", "Beauty & Spas", "Convenience Stores", "Department Stores", "Education",
+                "Event Planning & Services", "Flowers & Gifts", "Food", "Health & Medical", "Home Services",
+                "Home & Garden", "Hospitals", "Hotels & Travel", "Hardware Stores", "Grocery", "Medical Centers",
+                "Nurseries & Gardening", "Nightlife", "Restaurants", "Drugstores", "Dentists", "Doctors"};
         List valid_maincategories = Arrays.asList(Main_categories);
         String name = "";
 
@@ -259,59 +263,22 @@ public class Populate {
                 test_attrib_list.clear();
                 test_attrib_true.clear();
 
-                parse_jObj(obj_attrib, "", 0);
+//                parse_jObj(obj_attrib, "", 0);
+                parse_jObj_attr(obj_attrib,"");
+//                System.out.println(test_attrib_list);
 
-                int check_aattribute_size = big_attrib_tester.size() + test_attrib_list.size() - attributes.length();
-
-                if (check_aattribute_size > 0) {
-                    for (int i = 0; i < check_aattribute_size; i++) {
-                        attributes += "0";
-                    }
+                for(String attribute : test_attrib_list){
+                    statement = con.prepareStatement("INSERT INTO BUSINESS_TO_ATTRIBUTE VALUES(?,?)");
+                    statement.setString(1,business_id);
+                    statement.setString(2,attribute);
+                    statement.executeUpdate();
+                    statement.close();
                 }
 
-                check_the_attribute = false;
-                StringBuffer bf = new StringBuffer(attributes);
-                if (big_attrib_tester.size() == 0) {
-                    for (int i = 0; i < test_attrib_list.size(); i++) {
-                        big_attrib_tester.add(test_attrib_list.get(i));
-                        bf.setCharAt(i, '1');
-                    }
-                } else {
-                    for (int i = 0; i < test_attrib_list.size(); i++) {
-                        if (!(big_attrib_tester.contains(test_attrib_list.get(i)))) {
-                            big_attrib_tester.add(test_attrib_list.get(i));
-                            if (test_attrib_true.get(i) != "false") {
-                                bf.setCharAt(big_attrib_tester.size(), '1');
-                                if (big_attrib_tester.size() > 90) {
-                                    check_the_attribute = true;
-                                }
-                            }
-                        } else if (test_attrib_true.get(i) != "false") {
-                            bf.setCharAt(big_attrib_tester.indexOf(test_attrib_list.get(i)), '1');
-                            if (big_attrib_tester.indexOf(test_attrib_list.get(i)) > 90) {
-                                check_the_attribute = true;
-                            }
-                        }
-                    }
+                for(String attribute : test_attrib_list){
+                    if(!big_attrib_tester.contains(attribute))
+                        big_attrib_tester.add(attribute);
                 }
-
-                attributes = bf.toString();
-
-                statement = con.prepareStatement("UPDATE BUSINESS SET ATTRIB=? WHERE BID = ?");
-                statement.setString(1, attributes);
-                statement.setString(2, business_id);
-                statement.executeUpdate();
-                statement.close();
-
-//                if (check_the_attribute) {
-//                    System.out.println(tester);
-//                    System.out.println(attributes);
-//
-//                    for (int i = 0; i < test_attrib_list.size(); i++)
-//                        System.out.println(test_attrib_list.get(i) + ":" + test_attrib_true.get(i));
-//                    System.out.println("------------------");
-//                }
-//
                 ArrayList<String> list = new ArrayList<String>();
                 if (obj != null) {
                     int len = obj.length();
@@ -372,6 +339,7 @@ public class Populate {
         String date;
         int rating;
         String text;
+        int totalInserted = 0;
 
         try {
             File file_user = new File(yelp_review_file);
@@ -421,6 +389,9 @@ public class Populate {
                 statement.setInt(9, useful);
                 statement.executeUpdate();
                 statement.close();
+                totalInserted++;
+                if(totalInserted %10000 == 0)
+                    System.out.println(totalInserted);
             }
             fileReader_user.close();
             con.close();
@@ -449,6 +420,7 @@ public class Populate {
             Class.forName("oracle.jdbc.driver.OracleDriver");
 
             Connection con = null;
+            int totalInserted = 0;
 
             con = DriverManager.getConnection(DBURL, DBUSER, DBPASS);
 
@@ -466,6 +438,9 @@ public class Populate {
                     is_open = jObj_business.getBoolean("open");
                     Double rating = jObj_business.getDouble("stars");
                     Integer Rev_Count = jObj_business.getInt("review_count");
+                    Double longitude = jObj_business.getDouble("longitude");
+                    Double latitude = jObj_business.getDouble("latitude");
+//                    System.out.println(longitude+ " : " + latitude);
                     // System.out.println(jObj_business.getString("hours"));
                     JSONObject hours = jObj_business.getJSONObject("hours");
                     ArrayList<String> list = new ArrayList<String>();
@@ -580,10 +555,8 @@ public class Populate {
                         }
                     }
 
-                    statement = con.prepareStatement("INSERT INTO BUSINESS(BID, B_NAME, STREET, CITY, STATE_NM, PIN, REVIEW_CNT, RATING, B_OPEN, MONDAY_TIME_OPEN,  MONDAY_TIME_CLOSE,"
-                            + "TUESDAY_TIME_OPEN, TUESDAY_TIME_CLOSE, WEDNESDAY_TIME_OPEN, WEDNESDAY_TIME_CLOSE, THURSDAY_TIME_OPEN, THURSDAY_TIME_CLOSE,"
-                            + "FRIDAY_TIME_OPEN, FRIDAY_TIME_CLOSE, SATURDAY_TIME_OPEN, SATURDAY_TIME_CLOSE, SUNDAY_TIME_OPEN, SUNDAY_TIME_CLOSE"
-                            + ") VALUES(?,?,?,?,?,?,?,?,?,?,?,?,?,?,?,?,?,?,?,?,?,?,?)");
+                    statement = con.prepareStatement("INSERT INTO BUSINESS(BID, B_NAME, STREET, CITY, STATE_NM, PIN,LONGITUDE,LATITUDE, REVIEW_CNT, RATING, B_OPEN"
+                            + ") VALUES(?,?,?,?,?,?,?,?,?,?,?)");
 
                     statement.setString(1, business_id);
                     statement.setString(2, business_name);
@@ -591,36 +564,38 @@ public class Populate {
                     statement.setString(4, city);
                     statement.setString(5, state);
                     statement.setString(6, pin);
-                    statement.setInt(7, Rev_Count);
-                    statement.setDouble(8, rating);
+                    statement.setDouble(7,longitude);
+                    statement.setDouble(8,latitude);
+                    statement.setInt(9, Rev_Count);
+                    statement.setDouble(10, rating);
                     if (is_open) {
-                        statement.setString(9, "true");
+                        statement.setString(11, "true");
                     } else {
-                        statement.setString(9, "false");
+                        statement.setString(11, "false");
                     }
-                    String[] weekdays = {"Monday", "Tuesday", "Wednesday", "Thursday", "Friday", "Saturday", "Sunday"};
-                    for (int j = 0; j < weekdays.length; j++) {
-                        int timer1 = j * 2 + 10;
-                        int timer2 = j * 2 + 11;
-                        boolean check_timestamp = false;
-                        if (hours.has(weekdays[j])) {
-                            JSONObject day = hours.getJSONObject(weekdays[j]);
-                            if (day.has("open")) {
-                                String open = day.getString("open");
-                                statement.setTimestamp(timer1, Timestamp.valueOf("0001-01-01 " + open + ":00"));
-                                check_timestamp = true;
-                            }
-                            if (day.has("close")) {
-                                String close = day.getString("close");
-                                statement.setTimestamp(timer2, Timestamp.valueOf("0001-01-01 " + close + ":00"));
-                                check_timestamp = true;
-                            }
-                        }
-                        if (!check_timestamp) {
-                            statement.setTimestamp(timer1, null);
-                            statement.setTimestamp(timer2, null);
-                        }
-                    }
+//                    String[] weekdays = {"Monday", "Tuesday", "Wednesday", "Thursday", "Friday", "Saturday", "Sunday"};
+//                    for (int j = 0; j < weekdays.length; j++) {
+//                        int timer1 = j * 2 + 12;
+//                        int timer2 = j * 2 + 13;
+//                        boolean check_timestamp = false;
+//                        if (hours.has(weekdays[j])) {
+//                            JSONObject day = hours.getJSONObject(weekdays[j]);
+//                            if (day.has("open")) {
+//                                String open = day.getString("open");
+//                                statement.setTimestamp(timer1, Timestamp.valueOf("0001-01-01 " + open + ":00"));
+//                                check_timestamp = true;
+//                            }
+//                            if (day.has("close")) {
+//                                String close = day.getString("close");
+//                                statement.setTimestamp(timer2, Timestamp.valueOf("0001-01-01 " + close + ":00"));
+//                                check_timestamp = true;
+//                            }
+//                        }
+//                        if (!check_timestamp) {
+//                            statement.setTimestamp(timer1, null);
+//                            statement.setTimestamp(timer2, null);
+//                        }
+//                    }
 
                     statement.executeUpdate();
                     statement.close();
@@ -628,9 +603,11 @@ public class Populate {
                 } catch (JSONException e) {
                     e.printStackTrace();
                 }
-
+                totalInserted++;
+                if(totalInserted %10000 == 0)
+                    System.out.println(totalInserted);
             }
-            System.out.println("reached\n");
+            System.out.println("Finished Business\n");
             con.close();
             fileReader_user.close();
 
@@ -777,4 +754,27 @@ public class Populate {
             }
         }
     }
+    public static void parse_jObj_attr(JSONObject jObj, String check_back) throws JSONException {
+        Iterator<?> keys = jObj.keys();
+        while (keys.hasNext()) {
+            String key = (String) keys.next();
+            String toAppendKey = (check_back!="")?check_back + "_" + key: key;
+            Object check_me = jObj.get(key);
+            if (check_me instanceof JSONObject) {
+                parse_jObj_attr(jObj.getJSONObject(key), toAppendKey);
+            } else if (check_me instanceof JSONArray) {
+
+
+            } else {
+                test_attrib_list.add(toAppendKey + "_" + check_me.toString());
+            }
+        }
+    }
+
+
 }
+//[take_out_true,wifi_no,good for_desert_false,
+/* key = desert
+check_back = good for
+toappendkey = good for_desert
+* */
