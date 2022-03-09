@@ -567,7 +567,7 @@ public class HW3 extends javax.swing.JFrame {
             Class.forName("oracle.jdbc.driver.OracleDriver");
             Connection con = null;
             con = DriverManager.getConnection(DBURL, DBUSER, DBPASS);
-            statement = con.prepareStatement("SELECT CATEGORY FROM NATIVE_CATEGORY");
+            statement = con.prepareStatement("SELECT DISTINCT CATEGORY FROM NATIVE_CATEGORY ORDER BY CATEGORY");
             rs = statement.executeQuery();
             while (rs.next()) {
                 JCheckBox mycheckbox = new JCheckBox();
@@ -901,34 +901,9 @@ public class HW3 extends javax.swing.JFrame {
             while (rs.next()) {
                 boolean check_the_row = true;
                 boolean check_any_row = false;
-//                String key_attribute = rs.getString("ATTRIB");//doubt: not sure if attrib exists in the returned columns.
-//                int go_to_length = Integer.min(attrib_string.length(), key_attribute.length());
-//                StringBuffer buf_me = new StringBuffer(key_attribute);
-//                for (int i = 0; i < go_to_length; i++) {
-//                    if (buf_me.charAt(i) == '1') {
-//                        buf_all.setCharAt(i, '1');
-//                    }
-//                }
-//
-//                Timestamp check_time_open = rs.getTimestamp(Combo1 + "_TIME_OPEN");
-//                Timestamp check_time_close = rs.getTimestamp(Combo1 + "_TIME_CLOSE");
 
                 boolean check_time = true;
                 String check_if_open = rs.getString("B_OPEN");
-//                if (check_if_open.equals("false")) {
-//                    check_if_open = "CLOSED: ";
-//                } else {
-//                    check_if_open = "";
-//                }
-//
-//                if (jComboBox1.getSelectedItem().toString() != "NONE") {
-//                    check_time = check_time(check_time_open, check_time_close, jComboBox3.getSelectedItem().toString(),
-//                            jComboBox4.getSelectedItem().toString(), jToggleButton1.isSelected(), jToggleButton2.isSelected());
-//                    if (!check_time) {
-//                        continue;
-//                    }
-//                }
-
                 String my_bid = rs.getString("BID");
                 String mycheck = rs.getString("CHECKIN");
                 String mychecking = null;
@@ -1393,20 +1368,4 @@ class MyTableCellRender extends DefaultTableCellRenderer {
         setOpaque(true);
     }
 
-//    public Component getTableCellRendererComponent(JTable table, Object value, boolean isSelected, boolean hasFocus, int row, int column) {
-//
-//        String Number = (String) value;
-//
-//        setForeground(Color.black);
-//        setBackground(Color.white);
-//        if (Number != null) {
-//            if (Number.contains("CLOSED")) {
-//                setForeground(Color.white);
-//                setBackground(Color.red);
-//            }
-//        }
-//
-//        setText(value != null ? value.toString() : "");
-//        return this;
-//    }
 }
