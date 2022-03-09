@@ -1,10 +1,8 @@
 package JavaAccess;
 
 //import com.javafx.stage.WindowHelper;
-import java.awt.Color;
 import java.awt.Component;
 import java.awt.event.*;
-import java.lang.reflect.Executable;
 import java.sql.*;
 import java.util.ArrayList;
 import java.util.logging.Level;
@@ -14,7 +12,6 @@ import javax.swing.event.ChangeEvent;
 import javax.swing.event.ChangeListener;
 import javax.swing.table.DefaultTableCellRenderer;
 import javax.swing.table.DefaultTableModel;
-import javax.swing.table.TableModel;
 
 /*
  * To change this license header, choose License Headers in Project Properties.
@@ -129,6 +126,8 @@ public class HW3 extends javax.swing.JFrame {
         jExecuteQuery = new javax.swing.JButton();
         jClearAllFilters = new javax.swing.JButton();
         jUserTable = new javax.swing.JTable();
+        jUserOrBusiness = new javax.swing.JComboBox();
+
 
 
         setDefaultCloseOperation(javax.swing.WindowConstants.EXIT_ON_CLOSE);
@@ -221,6 +220,9 @@ public class HW3 extends javax.swing.JFrame {
 
         //set value search for
         jSearchFor.setModel(new javax.swing.DefaultComboBoxModel<>(new String[]{"AND","OR"}));
+
+        //set values for and
+        jUserOrBusiness.setModel(new javax.swing.DefaultComboBoxModel<>(new String[]{"User","Business"}));
 
         //set value searchforuser
         jSearchForUser.setModel(new javax.swing.DefaultComboBoxModel<>(new String[]{"AND","OR"}));
@@ -436,6 +438,8 @@ public class HW3 extends javax.swing.JFrame {
                         .addComponent(jSearchForUserLabel,javax.swing.GroupLayout.PREFERRED_SIZE, 120, javax.swing.GroupLayout.PREFERRED_SIZE)
                         .addGap(10,10,10)
                         .addComponent(jSearchForUser,javax.swing.GroupLayout.PREFERRED_SIZE, 50, javax.swing.GroupLayout.PREFERRED_SIZE)
+                            .addGap(25,25,25)
+                            .addComponent(jUserOrBusiness,javax.swing.GroupLayout.PREFERRED_SIZE, 80, javax.swing.GroupLayout.PREFERRED_SIZE)
                     )
                             )
                             .addGap(505,505,505)
@@ -537,6 +541,7 @@ public class HW3 extends javax.swing.JFrame {
                             .addGroup(layout.createParallelGroup(GroupLayout.Alignment.BASELINE)
                                     .addComponent(jSearchForUserLabel,javax.swing.GroupLayout.PREFERRED_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.PREFERRED_SIZE)
                                     .addComponent(jSearchForUser,javax.swing.GroupLayout.PREFERRED_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.PREFERRED_SIZE)
+                                    .addComponent(jUserOrBusiness,javax.swing.GroupLayout.PREFERRED_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.PREFERRED_SIZE)
                             )
                     )
                             .addGroup(layout.createSequentialGroup()
@@ -618,7 +623,7 @@ public class HW3 extends javax.swing.JFrame {
                     }
 
 
-                    SecondJFrame secondFrame = new SecondJFrame(all_bids.get(row), jTable1.getValueAt(row, 0).toString(),"Business",addFilters);
+                    ReviewFrame secondFrame = new ReviewFrame(all_bids.get(row), jTable1.getValueAt(row, 0).toString(),"Business",addFilters);
                     secondFrame.setVisible(true);
                     setEnabled(true);
                 }
@@ -647,7 +652,7 @@ public class HW3 extends javax.swing.JFrame {
                 if (!(all_uids.size() < row)) {
                     setEnabled(false);
                     jTable1.setOpaque(false);
-                    SecondJFrame secondFrame = new SecondJFrame(all_uids.get(row), jUserTable.getValueAt(row, 0).toString(),"User",addFilters);
+                    ReviewFrame secondFrame = new ReviewFrame(all_uids.get(row), jUserTable.getValueAt(row, 0).toString(),"User",addFilters);
                     secondFrame.setVisible(true);
                     setEnabled(true);
                 }
@@ -702,7 +707,10 @@ public class HW3 extends javax.swing.JFrame {
         jExecuteQuery.addActionListener(new ActionListener() {
             @Override
             public void actionPerformed(ActionEvent e) {
-                updateUserTable();
+                if(jUserOrBusiness.getSelectedItem().toString().equals("User"))
+                    updateUserTable();
+                else if(!jTextField1.getText().toString().equals(""))
+                    updateJustBasedOnCity();
             }
         });
 
@@ -718,6 +726,54 @@ public class HW3 extends javax.swing.JFrame {
         jTextField1.setText("");
         jTextField2.setText("");
         jTextField3.setText("");
+
+    }
+
+    //just the city
+    public void updateJustBasedOnCity(){
+        DefaultTableModel tmodel = new DefaultTableModel();
+        jTable1.setModel(tmodel);
+        tmodel.addColumn("Full Name");
+        tmodel.addColumn("City");
+        tmodel.addColumn("Review Count");
+        tmodel.addColumn("Business Name");
+        tmodel.addColumn("Longitude");
+        tmodel.addColumn("Latitude");
+        tmodel.addColumn("State");
+        tmodel.addColumn("Stars");
+        tmodel.addColumn("Whether Open");
+        all_bids.clear();
+        try {
+            Connection con = getJDBCConnection();
+            PreparedStatement statement = null;
+            ResultSet rs = null;
+            String statement_text = "SELECT DISTINCT BUSINESS.BID, BUSINESS.B_OPEN, BUSINESS.CHECKIN, BUSINESS.PIN,\n" +
+                    " BUSINESS.B_NAME, BUSINESS.ATTRIB,BUSINESS.STREET, BUSINESS.CITY, BUSINESS.STATE_NM, \n" +
+                    "BUSINESS.REVIEW_CNT, BUSINESS.LONGITUDE, BUSINESS.LATITUDE,BUSINESS.RATING FROM BUSINESS WHERE CITY = '" + jTextField1.getText().toString() + "'";
+            statement = con.prepareStatement(statement_text);
+            rs = statement.executeQuery();
+            int check_how_many = 0;
+            while(rs.next()){
+                boolean check_if_open = rs.getBoolean("B_OPEN");
+                String fullAddress = rs.getString("STREET") + "," +rs.getString("CITY") + ","+ rs.getString("STATE_NM");
+                tmodel.addRow(new Object[]{fullAddress, rs.getString("CITY"),rs.getInt("REVIEW_CNT"),
+                        rs.getString("B_NAME"),rs.getDouble("LONGITUDE"),rs.getDouble("LATITUDE"),
+                        rs.getString("STATE_NM"),rs.getInt("RATING"), check_if_open});
+                check_how_many++;
+                all_bids.add(rs.getString("BID"));
+
+            }
+            if (check_how_many > 0) {
+                jLabel1.setText("Number of Results" + check_how_many);
+                jLabel1.setVisible(true);
+            }
+        } catch (SQLException e) {
+            e.printStackTrace();
+        } catch (ClassNotFoundException e) {
+            e.printStackTrace();
+        }
+
+
 
     }
 
@@ -890,8 +946,8 @@ public class HW3 extends javax.swing.JFrame {
 
             //testing queries
             //TODO:Business query text
-//            System.out.println("Business text");
-//            System.out.println(statement_text);
+            System.out.println("Business text");
+            System.out.println(statement_text);
             statement = con.prepareStatement(statement_text);
             rs = statement.executeQuery();
             StringBuffer buf_all = new StringBuffer(attrib_string);
@@ -989,8 +1045,8 @@ public class HW3 extends javax.swing.JFrame {
                 statement_text += ")";
             statement_text += " ORDER BY ATTRIB";
             //TODO:Attributes text
-//            System.out.println("Attributes text");
-//            System.out.println(statement_text);
+            System.out.println("Attributes text");
+            System.out.println(statement_text);
             if (val != 4) {
                 statement = con.prepareStatement(statement_text);
                 rs = statement.executeQuery();
@@ -1283,6 +1339,7 @@ public class HW3 extends javax.swing.JFrame {
         });
     }
 
+
     // Variables declaration - do not modify//GEN-BEGIN:variables
     private javax.swing.JButton jButton1;
     private javax.swing.JButton jButton2;
@@ -1357,6 +1414,7 @@ public class HW3 extends javax.swing.JFrame {
     private javax.swing.JButton jExecuteQuery;
     private javax.swing.JButton jClearAllFilters;
     private javax.swing.JTable jUserTable;
+    private javax.swing.JComboBox jUserOrBusiness;
 
 
     // End of variables declaration//GEN-END:variables
